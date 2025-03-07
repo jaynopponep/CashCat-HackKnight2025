@@ -18,6 +18,7 @@ export default function Header() {
         </div>
         <div className="header-login-container">
             <Button text={"Login"} ></Button>
+           
             <button className='rounded-sm text-white transition hover:text-red-300/75'> Sign Up </button>
         </div>
     </div>
