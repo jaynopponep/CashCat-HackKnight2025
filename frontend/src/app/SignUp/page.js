@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react'
 import "../style.css"
+import { useRouter } from "next/navigation";
 export default function SignUp() {
     const [formData, setFormData] = useState({
         username: "",
         email: "",
         password: "",
     });
+    const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,6 +29,7 @@ export default function SignUp() {
                 const error = await response.json();
                 console.log("error parsing from backend", error);
             }
+            router.push("/")
         } catch (error) {
             console.error("error during signup", error);
         }
