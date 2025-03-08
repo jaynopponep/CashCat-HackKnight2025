@@ -1,0 +1,35 @@
+.tracking-container{
+    background: white;
+    display: flex;
+    flex-direction: row;
+    color: black;
+    height: 100vh;
+    
+}
+
+
+.tracking-transaction{
+    display: flex;
+    flex-direction: column;
+    width: 650px;
+    background: white;
+    padding: 6px 8px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.tracking-graphs{
+    background: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    width: 100%;
+}
+
+.tracking-info{
+    background: white;
+
+}
+.tracking-container h2{
+    padding: 6px 8px;
+    font-weight: bold;
+    font-size: x-large;
+
+}

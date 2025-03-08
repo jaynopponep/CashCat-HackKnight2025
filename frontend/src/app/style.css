@@ -1,7 +1,5 @@
 body{
-    background-color: white;
-   
-        
+    background-color: white;   
 }
 .logo-text{
     text-align : center;
@@ -217,3 +215,6 @@ body{
 }
 
 
+.tracking-info{
+    background: #a70806;
+}
