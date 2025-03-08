@@ -3,7 +3,7 @@ import "../style.css"
 export default function SignUp() {
   return (
    <div className  = "container">
-    <div className = "Login-box">
+    <div className = "Login-boxxxxx">
     <h2>Sign Up</h2>
     <form>
         <input type = "Email"  placeholder ="Enter Email"/>
