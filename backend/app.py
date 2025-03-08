@@ -64,6 +64,18 @@ def login():
     except Exception as e:
         return jsonify({"error": "Internal server error"}), 500
 
+@app.route('/profile', methods=['GET'])
+@jwt_required()
+def profile():
+    try:
+        curr_user = get_jwt_identity()
+        print("Current User:", curr_user)
+        if not curr_user:
+            return jsonify({"error": "invalid JWT token"}), 400
+        return jsonify({"username": curr_user}), 200
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
 if __name__ == "__main__":
     print(conn_string)
     app.run(debug=True)
