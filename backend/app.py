@@ -1,11 +1,16 @@
 from flask import Flask, request, jsonify
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
+import bcrypt # for encrypting passwords
 load_dotenv()
 
 app = Flask(__name__)
 conn_string = os.environ.get("MONGODB_CONN_STRING")
+JWT_SECRET = os.environ.get("JWT_SECRET_KEY")
+app.config["JWT_SECRET_KEY"] = JWT_SECRET
+jwt = JWTManager(app)
 
 try:
     client = MongoClient(conn_string)
@@ -30,8 +35,9 @@ def register():
             return jsonify({"error": "username already taken!"}), 409
         if user_auth.find_one({"email": email}):
             return jsonify({"error": "account with email already exists"}), 409
+        hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-        user_data = {"username": username, "email": email, "password": password}
+        user_data = {"username": username, "email": email, "password": hashed_pw.decode('utf-8')}
         # if i have time, planning to hash the passwords before saving them
         # but atleast we have demonstration
         user_auth.insert_one(user_data)
@@ -39,6 +45,24 @@ def register():
         return jsonify({"message": "User registration successful"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route('/login', methods=['POST'])
+def login():
+    try:
+        data = request.json
+        username = data.get("username")
+        password = data.get("password")
+        if not username or not password:
+            return jsonify({"error": "missing fields"}), 400
+        user = user_auth.find_one({"username": username})
+        if not user:
+            return jsonify({"error" : "user does not exist, please register first"}), 401
+        if not bcrypt.checkpw(password.encode('utf-8'), user["password"].encode('utf-8')):
+            return jsonify({"error": "invalid credentials"}), 401
+        access_token = create_access_token(identity=username)
+        return jsonify({"message": "login successful", "jwt_token": access_token}), 200
+    except Exception as e:
+        return jsonify({"error": "Internal server error"}), 500
 
 if __name__ == "__main__":
     print(conn_string)
