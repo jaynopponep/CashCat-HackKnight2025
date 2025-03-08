@@ -1,39 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Heart, MessageSquare } from 'lucide-react';
 
 const PostCard = ({ post, onLike }) => {
+  const [liked, setLiked] = useState(false);
+  
+  const handleLike = () => {
+    if (!liked) {
+      setLiked(true);
+      onLike(post.id);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow mb-4 p-4">
-      <div className="flex justify-between mb-3">
-        <div className="flex items-center">
-          <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+    <div className="bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow duration-200" style={{ borderColor: 'var(--border-color)' }}>
+      <div className="p-5">
+        <div className="flex items-center mb-4">
+          <div 
+            className="w-12 h-12 rounded-full flex items-center justify-center text-white mr-4"
+            style={{ backgroundColor: 'var(--component)' }}
+          >
             {post.user.avatar}
           </div>
-          <div>
-            <div className="font-medium">{post.user.name}</div>
-            <div className="text-sm text-gray-500">{post.user.handle} · {post.timestamp}</div>
+          <div className="flex-1">
+            <div className="flex items-center mb-1">
+              <span className="font-medium text-base">{post.user.name}</span>
+              <span className="mx-2 text-gray-500">paid</span>
+              <span className="font-medium text-base">{post.category}</span>
+            </div>
+            <div className="text-sm text-gray-500 flex items-center">
+              {post.timestamp} · {post.user.handle}
+            </div>
           </div>
         </div>
-        <div className="px-2 py-1 text-xs text-white rounded-full" 
-          style={{ backgroundColor: 'var(--component)' }}>
-          {post.category}
+        
+        <div className="py-3 text-gray-800 text-lg leading-relaxed tracking-wide">
+          {post.content}
         </div>
       </div>
       
-      <div className="mb-4">
-        {post.content}
-      </div>
-      
-      <div className="flex items-center text-gray-500 text-sm">
+      <div className="flex border-t" style={{ borderColor: 'var(--border-color)' }}>
         <button 
-          onClick={() => onLike(post.id)}
-          className="flex items-center mr-4 hover:text-red-600 transition-colors"
+          onClick={handleLike}
+          className={`flex-1 py-3 flex items-center justify-center ${liked ? 'text-red-600' : 'text-gray-500'} hover:bg-gray-50 transition-colors duration-150`}
         >
-          <Heart size={18} className="mr-1" />
-          <span>{post.likes}</span>
+          <Heart size={20} className="mr-2" fill={liked ? "currentColor" : "none"} />
+          <span>{post.likes + (liked ? 1 : 0)}</span>
         </button>
-        <button className="flex items-center hover:text-gray-700 transition-colors">
-          <MessageSquare size={18} className="mr-1" />
+        <div className="w-px bg-gray-200"></div>
+        <button className="flex-1 py-3 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-colors duration-150">
+          <MessageSquare size={20} className="mr-2" />
           <span>{post.comments}</span>
         </button>
       </div>

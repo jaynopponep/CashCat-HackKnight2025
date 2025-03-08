@@ -16,51 +16,55 @@ const CreatePost = ({ onCreatePost }) => {
       category
     });
     
-   
     setContent('');
     setCategory('');
   };
   
   return (
-    <div className="bg-white m-4 p-4 rounded-lg shadow">
+    <div className="bg-white p-5 rounded-lg shadow-sm w-full">
       <form onSubmit={handleSubmit}>
-        <div className="flex items-center mb-3">
-          <div className="w-10 h-10 rounded-full flex items-center justify-center text-white mr-3" style={{ backgroundColor: 'var(--component)' }}>
+        <div className="flex items-center mb-4">
+          <div className="w-12 h-12 rounded-full flex items-center justify-center text-white mr-4" style={{ backgroundColor: 'var(--component)' }}>
             JD
           </div>
-          <div className="text-sm text-gray-600">What's your financial win today?</div>
+          <div className="text-base text-gray-600">What's your financial win today?</div>
         </div>
         
         <textarea 
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2" 
+          className="w-full border rounded-lg p-4 focus:outline-none focus:ring-2 text-base leading-relaxed text-black" 
           placeholder="Share your financial journey..."
           style={{ borderColor: 'var(--border-color)' }}
           rows={3}
           required
         />
         
-        <div className="flex justify-between mt-3">
-          <div className="flex space-x-2">
+        <div className="flex justify-between mt-4">
+          <div className="flex space-x-3">
             <select 
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="rounded border px-3 py-1 text-sm text-gray-700"
+              className="rounded border px-4 py-2 text-sm text-gray-700"
               required
             >
               <option value="">Select Category</option>
+              <option value="Food">Food</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Bills">Bills</option>
               <option value="Budgeting">Budgeting</option>
               <option value="Investing">Investing</option>
               <option value="Debt">Debt</option>
               <option value="Savings">Savings</option>
               <option value="Income">Income</option>
+              <option value="Expenses">Expenses</option>
+              <option value="Business">Business</option>
             </select>
-            <button type="button" className="rounded border px-3 py-1 text-sm text-gray-700">Add Chart</button>
+            <button type="button" className="rounded border px-4 py-2 text-sm text-gray-700">Add Chart</button>
           </div>
           <button 
             type="submit"
-            className="text-white px-4 py-2 rounded-lg" 
+            className="text-white px-5 py-2 rounded-lg font-medium" 
             style={{ backgroundColor: 'var(--component)' }}
           >
             Post
