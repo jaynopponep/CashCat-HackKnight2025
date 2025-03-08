@@ -1,12 +1,13 @@
 import React from 'react'
 import Button from './Button'
+import { Cat } from 'lucide-react';
 
 export default function Header() {
   return (
     <div className='header-container'>
         <div className="header-logo-container">
-            {/* put logo here type shi*/}
             <h1>CashCat</h1>
+            <Cat></Cat>
         </div>
 
         <div className="header-links-container">

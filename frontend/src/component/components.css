@@ -1,12 +1,13 @@
 :root {
     --background: #f00d09;
-    --component: black;
+    --component: #cf0b08;
     --component-hover: #a70806;
     --component-text: ##ffffff;
 }
 
 .header-container{
     display: flex;
+    font-size: large;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
@@ -24,7 +25,7 @@
 
 h1{
     font-weight: 800;
-    font-size: large;
+    font-size: x-large;
 }
 
 .header-links-container ul>li{
