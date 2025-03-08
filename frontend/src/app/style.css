@@ -1,5 +1,5 @@
 :root {
-    --background: #f00d09;
+    --background-component: #f00d09;
     --component: #cf0b08;
     --component-hover: #a70806;
     --component-text: ##ffffff;
@@ -10,6 +10,7 @@
 }
 
 .hero-container{
+    position: relative;
     width: 100%;
     height: 60vh;
     display: flex;
@@ -17,7 +18,7 @@
     align-items: center;
     background: white;
     justify-content: center;
-    gap: 50px;
+    gap: 75px;
 }
 
 .header-logo-container{
@@ -29,6 +30,7 @@
 .hero-text{
     display: flex;
     flex-direction: column;
+    min-width: 350px;
     width: 350px;
     height: 2rem;
     justify-content: center;
@@ -49,7 +51,7 @@
 .hero-text .hero-text-bold{
     background: var(--background);
     width: fit-content;
-    padding: 6px 8px;
+    padding: 4px 8px;
     color: white;
     border-radius: 0.75rem;
 }
@@ -59,6 +61,65 @@
     font-weight:lighter
 }
 
+.quirky-container {
+    position: absolute;
+    bottom: 250px;
+    right: 312.5px;
+    z-index: 2;
+}
 
+.quirky {
+    transform: rotate(180deg);
+}
+
+.quirky-text {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;;
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--background-component); 
+    right: -45px;
+    top: -20px;
+}
+
+.about-container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    justify-content: center;
+    background: white;
+    padding: 20px;
+}
+
+.about-text{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+}
+
+.about-text h2{
+    margin-top: 40px;
+    font-size: xx-large;
+    font-weight: bold;
+}
+.about-text p{
+    width: 45%;
+    color: gray;
+}
+
+.about-cards{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
 
 
