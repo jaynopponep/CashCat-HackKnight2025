@@ -39,7 +39,7 @@ def save_to_chroma(chunks: list[Document]):
         shutil.rmtree(CHROMA)
 
     db = Chroma(
-        collection_name="lemmas",
+        collection_name="cashcat",
         embedding_function=embed,
         persist_directory=CHROMA
     )

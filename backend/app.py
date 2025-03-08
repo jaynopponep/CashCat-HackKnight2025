@@ -4,12 +4,15 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
 import bcrypt # for encrypting passwords
+from ragsystem.llm import build_rag_chain 
+from langchain_core.messages import HumanMessage, SystemMessage
 load_dotenv()
 
 app = Flask(__name__)
 conn_string = os.environ.get("MONGODB_CONN_STRING")
 JWT_SECRET = os.environ.get("JWT_SECRET_KEY")
 app.config["JWT_SECRET_KEY"] = JWT_SECRET
+OPENAI_KEY = os.getenv('OPENAI_KEY')
 jwt = JWTManager(app)
 
 try:
@@ -76,6 +79,21 @@ def profile():
     except Exception as e:
         return jsonify({"message": "internal server error"}), 500
 
+@app.route('/prompt_cashcat', methods=['POST'])
+def prompt_cashcat():
+    try:
+        data = request.json
+        user_prompt = data.get("prompt")
+        history = []
+        rag_chain = build_rag_chain(OPENAI_KEY)
+        result = rag_chain.invoke({"input": user_prompt, "chat_history": history})
+        if not result:
+            return jsonify({"message": "issue invoking rag chain!"}), 400
+        history.append(HumanMessage(content=user_prompt))
+        history.append(SystemMessage(content=result["answer"]))
+        return jsonify({"result": result['answer']}), 200
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
 if __name__ == "__main__":
-    print(conn_string)
     app.run(debug=True)
