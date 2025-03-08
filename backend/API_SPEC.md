@@ -91,3 +91,58 @@ None
 - "rewards"
 - "type"
 
+## /nessie_getmerchants
+### Headers:
+None
+
+### JSON Body:
+None
+
+### Query Params:
+None
+
+Returns: All merchants available
+
+## /nessie_makepurchase
+### Headers:
+None
+
+### JSON Body:
+- "merchant_id"
+- "amount"
+- "description"
+
+### Query Params:
+- "buyer_id"
+
+returns: 
+- "_id"
+- "amount"
+- "description"
+- "medium" 
+- "merchant_id"
+- "payer_id"
+- "purchase_date"
+- "status"
+- "type"
+
+## /nessie_getuserpurchases
+### Headers:
+None
+
+### JSON Body:
+None
+
+### Query Params:
+- "user_account_id"
+
+returns: 
+- "_id"
+- "amount"
+- "description"
+- "medium"
+- "merchant_id"
+- "payer_id"
+- "purchase_date"
+- "status"
+- "type"
