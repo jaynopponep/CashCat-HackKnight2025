@@ -1,20 +1,36 @@
 import React from 'react'
 import "../style.css"
-export default function SignUp() {
+export default function Login() {
   return (
-   <div className  = "container">
-    <div className = "Login-boxxxxx">
+<div className  = "container">
+  <div className = "Login-box">
+    <div className = "logo-containter">
+    <div className  = "logo-text">Cash Cat</div>
+    <div className = "sign">
     <h2>Sign Up</h2>
-    <form>
-        <input type = "Email"  placeholder ="Enter Email"/>
-        <input type = "Username" placeholder = "Enter Username"/>
-        <input type = "Password" placeholder = "Enter Password"/>
-        <button type = "button"> Submit </button>
-    </form>
+    </div>
+    
+    <div className = "wrapper">
+      <form>
+      <input type = "email" className  = "input-field" placeholder = "Enter Email"/>
+        <input type = "Username" className  = "input-field" placeholder = "Enter Username"/>
+        <input type = "Password" className = "input-field" placeholder = "Enter Password"/>
+        <button type = "button" className='butt'>Submit </button>
+       
+      </form>
    </div>
-  </div>
-  );
+    </div>
+ </div>
+ </div>
+);
 }
+
+ 
+ 
+
+ 
+ 
+
 
  
  
