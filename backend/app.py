@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 from pymongo import MongoClient
@@ -10,6 +11,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 conn_string = os.environ.get("MONGODB_CONN_STRING")
 JWT_SECRET = os.environ.get("JWT_SECRET_KEY")
 try:
@@ -39,7 +41,6 @@ def register():
         password = data.get("password")
         if not username or not password or not email:
             return jsonify({"error": "missing fields"}), 400
-
         if user_auth.find_one({"username": username}):
             return jsonify({"error": "username already taken!"}), 409
         if user_auth.find_one({"email": email}):
