@@ -15,7 +15,7 @@ export default function Login() {
         <input type = "Username" className  = "input-field" placeholder = "Enter Username"/>
         <input type = "Password" className = "input-field" placeholder = "Enter Password"/>
         <a href = "/forgot-password" className = "password">Forgot Password?</a>
-        <button type = "button" className='butt'>Submit </button>
+        <button type = "button" className='button'>Submit </button>
        
       </form>
     </div>
