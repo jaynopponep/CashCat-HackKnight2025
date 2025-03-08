@@ -1,10 +1,25 @@
 @import "tailwindcss";
 
+/* New additional variables */
+:root {
+  /* New variables – these won’t override the original ones below */
+  --component: #cf0b08;
+  --component-hover: #a70806;
+  --component-text: #ffffff;
+  
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --background-light: #f5f5f5;
+  --border-color: #dddddd;
+}
+
+/* Original core design variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
+/* Original theme configuration */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -12,6 +27,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Dark mode override from original */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,8 +35,65 @@
   }
 }
 
+/* Global resets from new CSS */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* Combined body styles */
+/* Using original background/foreground (for design consistency) 
+   while adopting the new system font stack */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* Additional element styles from new CSS */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Utility classes */
+.text-white {
+  color: var(--component-text);
+}
+
+.text-primary {
+  /* Using the original --background for this accent */
+  color: var(--background);
+}
+
+.hidden {
+  display: none;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
