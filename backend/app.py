@@ -108,6 +108,36 @@ def getallcustomers():
     except Exception as e:
         return jsonify({"message": "internal server error"}), 500
 
+@app.route('/nessie_getcustomerinfo', methods=['GET'])
+def getcustomerinfo():
+    try:
+        user_id = request.args.get('id')
+        if not user_id:
+            return jsonify({"message": "missing fields"}), 500
+        response = requests.get(f"http://api.nessieisreal.com/customers/{user_id}?key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_getallaccounts', methods=['GET'])
+def getallaccounts():
+    try:
+        response = requests.get(f"http://api.nessieisreal.com/accounts?type=Checking&key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_getaccountinfo', methods=['GET'])
+def getaccountinfo():
+    try:
+        account_id = request.args.get('account_id')
+        response = requests.get(f"http://api.nessieisreal.com/accounts/{account_id}?key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
