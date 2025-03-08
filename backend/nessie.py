@@ -1,5 +1,3 @@
-
-
 import requests
 import json
 import os
@@ -7,7 +5,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 apiKey = os.getenv('NESSIE_API_KEY')
-apiKey = NESSIE_API_KEY
 print("API Key Loaded:", apiKey)
 if not apiKey:
     raise ValueError("NESSIE_API_KEY not found in .env file")
