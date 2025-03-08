@@ -22,11 +22,14 @@ const PostCard = ({ post, onLike }) => {
             {post.user.avatar}
           </div>
           <div className="flex-1">
-            <div className="flex items-center mb-1">
-              <span className="font-medium text-base">{post.user.name}</span>
-              <span className="mx-2 text-gray-500">paid</span>
-              <span className="font-medium text-base">{post.category}</span>
-            </div>
+          <div className="flex items-center gap-x-4 m-4">
+  <span className="font-medium text-base text-black">{post.user.name}</span>
+  <span className="text-gray-500">paid</span>
+  <span className="font-medium text-base text-black">{post.category}</span>
+</div>
+
+
+
             <div className="text-sm text-gray-500 flex items-center">
               {post.timestamp} · {post.user.handle}
             </div>

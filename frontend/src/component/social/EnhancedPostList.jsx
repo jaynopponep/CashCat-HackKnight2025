@@ -126,6 +126,14 @@ const EnhancedPostList = () => {
     // Do nothing - likes handled in PostCard component
   };
 
+  const renderGap = () => (
+    <div className="my-8 flex items-center justify-center">
+      <div className="w-1/3 h-px bg-gray-200"></div>
+      <div className="mx-4 text-gray-400 text-sm">∙∙∙</div>
+      <div className="w-1/3 h-px bg-gray-200"></div>
+    </div>
+  );
+
   return (
     <div className="px-4 pb-16 pt-4 flex justify-center">
       <div className="w-full max-w-lg">
@@ -134,14 +142,17 @@ const EnhancedPostList = () => {
             No transactions yet.
           </div>
         ) : (
-          posts.map(post => (
-            <div className="mb-16" key={post.id}>
-              <PostCard 
-                post={post} 
-                onLike={handleLike}
-              />
-            </div>
-          ))
+          <>
+            {posts.map((post, index) => (
+              <React.Fragment key={post.id}>
+                <PostCard 
+                  post={post} 
+                  onLike={handleLike}
+                />
+                {index < posts.length - 1 && renderGap()}
+              </React.Fragment>
+            ))}
+          </>
         )}
       </div>
     </div>
