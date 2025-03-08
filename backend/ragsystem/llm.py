@@ -25,7 +25,7 @@ def build_rag_chain(api_key):
     )
     retriever = db.as_retriever(
         search_type="similarity_score_threshold",
-        search_kwargs={"k": 5, "score_threshold": 0.3},
+        search_kwargs={"k": 5, "score_threshold": 0.1},
     )
     model = ChatOpenAI(api_key=api_key, model="gpt-4o")
     context = (

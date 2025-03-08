@@ -19,3 +19,10 @@ None
 ## /profile (GET)
 ### Headers:
 **Authorization**: Bearer Token
+
+## /prompt_cashcat (POST)
+### Headers:
+None
+
+### Parameters:
+- prompt (string)
