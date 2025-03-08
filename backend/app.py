@@ -139,5 +139,40 @@ def getaccountinfo():
     except Exception as e:
         return jsonify({"message": "internal server error"}), 500
 
+@app.route('/nessie_getmerchants', methods=['GET'])
+def getmerchants():
+    try:
+        # note there are more merchants, but the best constraints i've found is lat=42, long=-76, 25 mi radius
+        # 100% subject to change though
+        response = requests.get(f"http://api.nessieisreal.com/merchants?lat=42&lng=-76&rad=25&key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_makepurchase', methods=['POST'])
+def makepurchase():
+    try:
+        buyer_id = requests.args.get('buyer_id')
+        data = request.json
+        merchant_id = data.get("merchant_id")
+        amount = data.get("amount")
+        purchase_payload = {
+                "merchant_id": merchant_id,
+                "medium": "balance",
+                "purchase_date": "2025-03-08",
+                "amount": amount,
+                "status": "completed",
+                "description": ""
+                }
+        response = requests.get(f"http://api.nessieisreal.com/accounts/{buyer_id}/purchases?key={NESSIEKEY}",
+                                json=purchase_payload)
+        print(response)
+        data = response.json()
+        print(data)
+        return jsonify(data, response.status_code)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
 if __name__ == "__main__":
     app.run(debug=True)
