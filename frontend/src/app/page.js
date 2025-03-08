@@ -1,18 +1,48 @@
+"use client"
 import Footer from "@/component/Footer";
 import Header from "@/component/Header";
 import Image from "next/image";
 import "./style.css"
 import { Cat } from 'lucide-react';
+import { CircleDollarSign } from 'lucide-react';
 import Card from "@/component/Card";
+import { useState, useEffect } from "react";
 
 
 export default function Home() {
+  const [coins, setCoins] = useState([]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCoins((prev) => [
+        ...prev,
+        { id: Math.random(), left: Math.random() * 100 }, 
+      ]);
+      
+      
+      setTimeout(() => {
+        setCoins((prev) => prev.slice(1));
+      }, 1000);
+    }, 500); 
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="w-full bg-white">
       <Header></Header>
       <div className="hero-container">
         <div className="hero-text">
           <h2>Welcome to <div className="hero-text-bold">CashCat</div></h2>
+          {coins.map((coin) => (
+            <span
+              key={coin.id}
+              className="coin absolute text-yellow-400"
+              style={{ left: `${coin.left}%`, top: "-10px" }}
+            >
+              <CircleDollarSign></CircleDollarSign>
+            </span>
+      ))}
           <p>Experience financial gains with smart transaction tracking and budgeting tools</p>
         </div>
         <Cat className="Meow" size={256} strokeWidth= {1.5} color="#f00d09"></Cat>

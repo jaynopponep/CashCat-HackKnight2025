@@ -48,13 +48,49 @@
     color: black;
 }
 
+@keyframes scratch {
+    0% { transform: rotate(0deg) translateY(0); }
+    25% { transform: rotate(-2deg) translateY(-2px); }
+    50% { transform: rotate(2deg) translateY(2px); }
+    75% { transform: rotate(-2deg) translateY(-2px); }
+    100% { transform: rotate(0deg) translateY(0); }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
 .hero-text .hero-text-bold{
+    display: inline-block;
+    animation: scratch 0.8s infinite ease-in-out;
     background: var(--background);
     width: fit-content;
     padding: 4px 8px;
     color: white;
     border-radius: 0.75rem;
 }
+
+@keyframes floatUp {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-50px) scale(1.2);
+    }
+  }
+  
+  .coin {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: floatUp 1s ease-out forwards;
+  }
 
 .hero-text p{
     color: gray;

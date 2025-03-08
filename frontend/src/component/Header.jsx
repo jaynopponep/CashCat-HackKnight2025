@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from './Button'
 import { Cat } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Header() {
   return (
@@ -18,9 +19,9 @@ export default function Header() {
             </ul>
         </div>
         <div className="header-login-container">
-            <Button text={"Login"} ></Button>
+            <Link href="/Login"><Button text={"Login"} ></Button></Link>
            
-            <button className='rounded-sm text-white transition hover:text-red-300/75'> Sign Up </button>
+            <Link href="/SignUp"><button className='rounded-sm text-white transition hover:text-red-300/75'> Sign Up </button></Link>
         </div>
     </div>
     
