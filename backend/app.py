@@ -153,24 +153,33 @@ def getmerchants():
 @app.route('/nessie_makepurchase', methods=['POST'])
 def makepurchase():
     try:
-        buyer_id = requests.args.get('buyer_id')
+        buyer_id = request.args.get('buyer_id')
         data = request.json
         merchant_id = data.get("merchant_id")
         amount = data.get("amount")
+        description = data.get("description")
         purchase_payload = {
                 "merchant_id": merchant_id,
                 "medium": "balance",
                 "purchase_date": "2025-03-08",
                 "amount": amount,
                 "status": "completed",
-                "description": ""
+                "description": description 
                 }
-        response = requests.get(f"http://api.nessieisreal.com/accounts/{buyer_id}/purchases?key={NESSIEKEY}",
+        response = requests.post(f"http://api.nessieisreal.com/accounts/{buyer_id}/purchases?key={NESSIEKEY}",
                                 json=purchase_payload)
-        print(response)
         data = response.json()
-        print(data)
-        return jsonify(data, response.status_code)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_getuserpurchases', methods=['GET'])
+def getuserpurchases():
+    try:
+        user_account_id = request.args.get('user_account_id')
+        response = requests.get(f"http://api.nessieisreal.com/accounts/{user_account_id}/purchases?key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
     except Exception as e:
         return jsonify({"message": "internal server error"}), 500
 
