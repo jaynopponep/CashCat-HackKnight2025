@@ -35,13 +35,13 @@ export default function SignUp() {
     return (
         <div className="container">
             <div className="Login-box">
-                <div className = "logo-containter">
-                    <div className  = "logo-text">Cash Cat</div>
-                    <div className = "sign">
+                <div className="logo-containter">
+                    <div className="logo-text">Cash Cat</div>
+                    <div className="sign">
                         <h2>SignUp</h2>
                     </div>
 
-                    <div className = "wrapper">
+                    <div className="wrapper">
                         <form onSubmit={handleSubmit}>
                             <input type="text" name="email" className="input-field" placeholder="Enter Email" value={formData.email} onChange={(e) =>
                                 setFormData({ ...formData, email: e.target.value }) } required/>
