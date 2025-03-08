@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import requests
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 from pymongo import MongoClient
 from dotenv import load_dotenv
@@ -11,6 +12,11 @@ load_dotenv()
 app = Flask(__name__)
 conn_string = os.environ.get("MONGODB_CONN_STRING")
 JWT_SECRET = os.environ.get("JWT_SECRET_KEY")
+try:
+    NESSIEKEY = os.environ.get("NESSIEAPIKEY")
+except Exception as e:
+    print("couldn't get Nessie key")
+    exit(1)
 app.config["JWT_SECRET_KEY"] = JWT_SECRET
 OPENAI_KEY = os.getenv('OPENAI_KEY')
 jwt = JWTManager(app)
@@ -41,8 +47,6 @@ def register():
         hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         user_data = {"username": username, "email": email, "password": hashed_pw.decode('utf-8')}
-        # if i have time, planning to hash the passwords before saving them
-        # but atleast we have demonstration
         user_auth.insert_one(user_data)
 
         return jsonify({"message": "User registration successful"}), 200
@@ -94,6 +98,16 @@ def prompt_cashcat():
         return jsonify({"result": result['answer']}), 200
     except Exception as e:
         return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_getallcustomers', methods=['GET'])
+def getallcustomers():
+    try:
+        response = requests.get(f"http://api.nessieisreal.com/customers?key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)

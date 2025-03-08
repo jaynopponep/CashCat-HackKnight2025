@@ -26,3 +26,16 @@ None
 
 ### Parameters:
 - prompt (string)
+
+## /nessie_getallcustomers (GET)
+### Headers:
+None
+
+### Parameters:
+None
+
+Returns: JSON response of all customers. Each customer has:
+- "_id"
+- "address" which has "city", "state", "street_name", "street_number", "zip""
+- "first_name"
+- "last_name"
