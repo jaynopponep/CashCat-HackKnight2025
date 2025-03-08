@@ -1,7 +1,28 @@
 ### CashCat API Endpoints
 
 ## /register (POST)
+### Headers:
+None
 ### Parameters:
-- username
-- email
-- password
+- username (string)
+- email (string)
+- password (string)
+
+## /login (POST)
+### Headers:
+None
+
+### Parameters:
+- username (string)
+- password (string)
+
+## /profile (GET)
+### Headers:
+**Authorization**: Bearer Token
+
+## /prompt_cashcat (POST)
+### Headers:
+None
+
+### Parameters:
+- prompt (string)
