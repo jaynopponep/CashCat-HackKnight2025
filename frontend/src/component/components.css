@@ -38,7 +38,7 @@ h1{
 }
 
 .buttons{
-    padding: 6px 12px;
+    padding: 6px 14px;
     background: var(--component);
     color: var(--component-text);
     align-items: center;

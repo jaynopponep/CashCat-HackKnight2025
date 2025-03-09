@@ -27,6 +27,7 @@ try:
     client = MongoClient(conn_string)
     db = client["cashcat"]
     user_auth = db["user_auth"]
+    posts = db["posts"]
     print("connected to MongoDB")
 except Exception as e:
     print(f"Connection error: {e}")
@@ -83,6 +84,19 @@ def getuseraccountid():
         return jsonify({"account_id": account_id}), 200
     except Exception as e:
         return jsonify({"error": "Token invalid or expired"}), 401
+
+
+@app.route('/get_username', methods=['GET'])
+@jwt_required()
+def get_username():
+    try:
+        username = get_jwt_identity()
+        if not username:
+            return jsonify({"error": "username doesn't exist"}), 404
+        return jsonify({"username": username}), 200
+    except Exception as e:
+        return jsonify({"error": "Token invalid or expired"}), 401
+
 
 @app.route('/profile', methods=['GET'])
 @jwt_required()
@@ -193,6 +207,19 @@ def getuserpurchases():
         response = requests.get(f"http://api.nessieisreal.com/accounts/{user_account_id}/purchases?key={NESSIEKEY}")
         data = response.json()
         return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/add_post', methods=['POST'])
+def addpost():
+    try:
+        data = request.json
+        username = data.get("username")
+        content = data.get("content")
+        category = data.get("category")
+        content_data = {"username": username, "content": content, "category": category}
+        posts.insert_one(content_data)
+        return jsonify({"message": "post successful"}), 200
     except Exception as e:
         return jsonify({"message": "internal server error"}), 500
 

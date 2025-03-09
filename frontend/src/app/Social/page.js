@@ -10,9 +10,9 @@ import VisualizationPanel from '../../component/social/VisualizationPanel';
 export default function SocialPage() {
   const [activeTab, setActiveTab] = useState('feed');
   const [user, setUser] = useState({
-    name: 'James Doe',
-    handle: '@jamesdoesfinance',
-    avatar: 'JD',
+    name: 'Walter White',
+    handle: '@heisenberg',
+    avatar: 'WW',
     balance: 3842.65,
     growth: 12.4
   });
