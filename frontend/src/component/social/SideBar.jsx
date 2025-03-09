@@ -18,13 +18,12 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const SideBar = ({ user }) => {
   const router = useRouter();
   const phrases = [
-    "No $6 latte today.. 😾",
-    "Do you really need that subscription.. 😼",
-    "Takeout today, but no churru for me? 😿",
-    "Maybe those eggs will be down tomorrow... 🥚",
-  ];
+      "No $6 latte today.. 😾",
+      "Do you really need that subscription.. 😼",
+      "Takeout today, but no salmon treats for me? 😿",
+      "Maybe those eggs will be down tomorrow... 🥚",
+  ]
   const [randomPhrase, setRandomPhrase] = useState('');
-
   useEffect(() => {
     document.documentElement.style.setProperty('--background', '#f00d09');
     document.documentElement.style.setProperty('--component', '#f00d09');
@@ -52,6 +51,7 @@ const SideBar = ({ user }) => {
 
   return (
     <div className="w-64 text-white flex flex-col mt-9" style={{ backgroundColor: 'var(--background)' }}>
+      {}
       <div className="p-4 border-b" style={{ borderColor: 'var(--component-hover)' }}>
         <h1 className="text-2xl font-bold cursor-pointer" onClick={() => handleNavigation('/')}>CashCat</h1>
         <p style={{ color: '#ffcccc' }}>{randomPhrase}</p>
@@ -76,7 +76,7 @@ const SideBar = ({ user }) => {
           <h3 className="text-md font-semibold text-center text-black mb-2">Savings Trend</h3>
           <Bar data={savingsData} />
         </div>
-
+        
         <NavItem icon={<Users />} label="Friends" onClick={() => handleNavigation('/')} />
         <NavItem 
           icon={<HelpCircle />} 
