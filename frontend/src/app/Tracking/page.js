@@ -29,34 +29,71 @@ ChartJS.register(
 
 export default function Tracking() {
     const [transactions, setTransactions] = useState([]);
-    const [error, setError] = useState(null);  // To handle any errors
+    const [userAccountId, setUserAccountId] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Make an API call to fetch transaction data
+        const fetchAccIdWithToken = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                console.log("User not logged in");
+                return;
+            }
+            try {
+                const response = await fetch("http://127.0.0.1:5000/get_useraccount_id", {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                });
+                const data = await response.json();
+                console.log(data)
+                if (!response.ok) {
+                    console.log("couldn't get user's username with JWT token", data);
+                    return;
+                }
+                setUserAccountId(data.account_id.account_id);
+                console.log("Logged in as account ID:", data.account_id.account_id);
+            } catch (error) {
+                console.log("Error retrieving username", error);
+            }
+        };
+        fetchAccIdWithToken();
+    }, []);
+
+    useEffect(() => {
+        if (userAccountId) {
+            fetchTransactions();
+        }
+    }, [userAccountId]);
+
         const fetchTransactions = async () => {
             try {
-                const token = localStorage.getItem("jwt_token");  // Assuming you are storing the JWT in localStorage
-                const response = await fetch('/nessie_getuserpurchases?user_account_id=12345', {
+                console.log(userAccountId);
+                const response = await fetch(`http://127.0.0.1:5000/nessie_getuserpurchases?user_account_id=${userAccountId}`, {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${token}`,  // Add the JWT token to the headers
                         'Content-Type': 'application/json',
-                    }
+                    },
                 });
+                const data = await response.json();
 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const data = await response.json();
-                setTransactions(data);  // Update the state with the fetched transactions
+                const extractedTransactions = data.map(transaction => ({
+                    amount: transaction.amount,
+                    description: transaction.description,
+                }));
+                console.log("extracted transactions", extractedTransactions);
+                setTransactions(extractedTransactions);
             } catch (error) {
                 setError('Error fetching data');
                 console.error('Error:', error);
             }
-        }
+        };
 
-        fetchTransactions();
-    }, []);  // Empty dependency array to fetch data only once when the component mounts
+
 
     const chartData = {
         labels: transactions.map((t, index) => `Transaction ${index + 1}`),
@@ -89,10 +126,13 @@ export default function Tracking() {
                 <div className='tracking-transaction'>
                     <h2>Transaction History</h2>
                     <div>
-                        {error && <p>{error}</p>}  {/* Display error if there's an issue */}
+                        {error && <p>{error}</p>}
                         {transactions.length > 0 ? (
                             transactions.map((purchase, key) => (
-                                <Transaction key={key} info={purchase} />
+                                <Transaction
+                                    key={key}
+                                    info={{ amount: purchase.amount, description: purchase.description }}
+                                />
                             ))
                         ) : (
                             <p>No transactions found</p>
@@ -102,21 +142,6 @@ export default function Tracking() {
 
                 <div className='tracking-graphs'>
                     <h2>Dashboard</h2>
-                    {/* Add other graphing components or statistics here */}
-                      <div className='graph-area'>
-                      <div className='chart-wrapper'>
-                            <Line data={chartData} options={{ maintainAspectRatio: false }} />
-                        </div>
-                        <div className='chart-wrapper'>
-                            <Bar data={barChartData} options={{ maintainAspectRatio: false }} />
-                        </div>
-                        <div className='chart-wrapper'>
-                            <Line data={chartData} options={{ maintainAspectRatio: false }} />
-                        </div>
-                        <div className='chart-wrapper'>
-                            <Bar data={barChartData} options={{ maintainAspectRatio: false }} />
-                        </div>
-                      </div>
                 </div>
             </div>
         </div>

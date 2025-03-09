@@ -25,15 +25,17 @@ export default function SignUp() {
                     password: formData.password,
                 }),
             });
+            const data = await response.json();
+            console.log("data:", data)
             if (!response.ok) {
-                const error = await response.json();
-                console.log("error parsing from backend", error);
+                console.log("error parsing from backend", data);
+                return;
             }
+            setFormData({ username: "", email: "", password: "" });
             router.push("/")
         } catch (error) {
-            console.error("error during signup", error);
+            console.error("error during signup", data);
         }
-        setFormData({ username: "", email: "", password: "" });
     };
     return (
         <div className="container">

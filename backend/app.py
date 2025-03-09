@@ -70,7 +70,19 @@ def login():
         access_token = create_access_token(identity=username)
         return jsonify({"message": "login successful", "jwt_token": access_token}), 200
     except Exception as e:
-        return jsonify({"error": "Internal server error"}), 500
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
+
+@app.route('/get_useraccount_id', methods=['GET'])
+@jwt_required()
+def getuseraccountid():
+    try:
+        username = get_jwt_identity()
+        account_id = user_auth.find_one({"username": username}, {"account_id": 1, "_id": 0})
+        if not account_id:
+            return jsonify({"error": "no account id found"}), 404
+        return jsonify({"account_id": account_id}), 200
+    except Exception as e:
+        return jsonify({"error": "Token invalid or expired"}), 401
 
 @app.route('/profile', methods=['GET'])
 @jwt_required()

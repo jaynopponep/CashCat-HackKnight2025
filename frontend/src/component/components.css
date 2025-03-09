@@ -2,7 +2,7 @@
     --background: #f00d09;
     --component: #cf0b08;
     --component-hover: #a70806;
-    --component-text: ##ffffff;
+    --component-text: #ffffff;
 }
 
 .header-container{
@@ -60,7 +60,7 @@ h1{
     width: 350px;
     height: 350px;
     justify-content: space-between;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
 
 }
 
@@ -95,6 +95,6 @@ h1{
     align-items: center;
     margin-top: 10px;
     padding: 6px 8px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
     font-weight: bold;
 }
