@@ -49,7 +49,7 @@ def build_rag_chain(api_key):
         "You are an assistant for question-answering tasks. Use"
         "the following pieces of retrieved context to answer the "
         "question. If you don't know the answer, just say "
-        "you don't know. Use 5 sentences maximum and keep the answer concise "
+        "you don't know. Use 2 sentences maximum and keep the answer concise "
         "At the end, you must state that this is not financial advice, although "
         "just simply for discussion."
         "\n\n"
