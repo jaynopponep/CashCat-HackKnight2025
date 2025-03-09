@@ -34,20 +34,17 @@ export default function HelpPage() {
   const [message, setMessage] = useState('');
   const [isSent, setIsSent] = useState(false);
   const router = useRouter();
-  
-  // Sample user data (this should match your app's state management)
+
   const user = {
-    name: 'James Doe',
-    handle: '@jamesdoesfinance',
-    avatar: 'JD',
+    name: 'Walter White',
+    handle: '@heisenberg',
+    avatar: 'WW',
     balance: 3842.65,
     growth: 12.4
   };
 
   const handleSendMessage = () => {
     if (message.trim()) {
-      // Here you would typically send the message to your backend
-      // For now, we'll just show the success message
       setIsSent(true);
       setMessage('');
       

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import SideBar from '../../component/social/SideBar';
-// import SocialHeader from '../../component/social/SocialHeader';
 import CreatePost from '../../component/social/CreatePost';
 import EnhancedPostList from '../../component/social/EnhancedPostList';
 import VisualizationPanel from '../../component/social/VisualizationPanel';
@@ -10,9 +9,9 @@ import VisualizationPanel from '../../component/social/VisualizationPanel';
 export default function SocialPage() {
   const [activeTab, setActiveTab] = useState('feed');
   const [user, setUser] = useState({
-    name: 'James Doe',
-    handle: '@jamesdoesfinance',
-    avatar: 'JD',
+    name: 'Walter White',
+    handle: '@heisenberg',
+    avatar: 'WW',
     balance: 3842.65,
     growth: 12.4
   });
