@@ -163,7 +163,7 @@
 import React, { useState, useEffect } from 'react';
 import PostCard from './PostCard';
 
-const BASEURL = "http://127.0.0.1:5000"; // Update with actual backend URL
+const BASEURL = "https://cashcat.onrender.com"; // Update with actual backend URL
 
 const EnhancedPostList = () => {
   const [posts, setPosts] = useState([]);
