@@ -223,5 +223,16 @@ def addpost():
     except Exception as e:
         return jsonify({"message": "internal server error"}), 500
 
+@app.route('/get_posts', methods=['GET'])
+def getposts():
+    try:
+        all_posts = list(posts.find({}))
+        for post in all_posts:
+            post["_id"] = str(post["_id"])
+        print(all_posts)
+        return jsonify(all_posts), 200 
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
 if __name__ == "__main__":
     app.run(debug=True)

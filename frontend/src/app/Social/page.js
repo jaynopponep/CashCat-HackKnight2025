@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import SideBar from '../../component/social/SideBar';
-// import SocialHeader from '../../component/social/SocialHeader';
 import CreatePost from '../../component/social/CreatePost';
 import EnhancedPostList from '../../component/social/EnhancedPostList';
 import VisualizationPanel from '../../component/social/VisualizationPanel';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../components.css';
 
-const BASEURL = "http://127.0.0.1:5000";
+const BASEURL = "https://cashcat.onrender.com";
 
 const CreatePost = ({ onCreatePost }) => {
   const [content, setContent] = useState('');
@@ -126,7 +126,7 @@ const CreatePost = ({ onCreatePost }) => {
             </div>
             <button
                 type="submit"
-                className="text-white px-5 py-2 rounded-lg font-medium"
+                className="text-white px-5 py-2 rounded-lg font-medium cursor-pointer"
                 style={{ backgroundColor: 'var(--component)' }}
             >
               Post
