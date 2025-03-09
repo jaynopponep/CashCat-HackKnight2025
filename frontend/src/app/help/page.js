@@ -67,6 +67,18 @@ export default function HelpPage() {
     {
       question: "How to use the social features?",
       answer: "Share your financial milestones and connect with friends by using the Friends tab."
+    },
+    {
+      question: "Is there an App yet?",
+      answer: "We are currently in progress for building a mobile app of our product!."
+    },
+    {
+      question: "Can I trust Ozzy's Advice?",
+      answer: "Ozzy has been reading and training himself on Financial Literature and Textbooks. His advice isnt perfect, but its a great place to start learning more and planning better!."
+    },
+    {
+      question: "Are the data vizualizations accurate?",
+      answer: "Yes! The data visualizations are done using data in your financial accounts, visualized using ChartJS in order to make them much easier to understand. Our goal is to help users manage and view their finances easier, if you have any possible improvements, let us know!"
     }
   ];
 
