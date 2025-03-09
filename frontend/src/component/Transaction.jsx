@@ -5,7 +5,7 @@ function Transaction({ info }) {
   return (
       <div className='transaction-container'>
         <p>Amount: ${info.amount}</p>
-        <p>Description: {info.description}</p>
+        <p>Category: {info.description}</p>
       </div>
   )
 }

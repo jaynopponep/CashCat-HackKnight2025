@@ -10,7 +10,7 @@ export default function Team() {
   <div className='team-tiles-container'>
     <div className='team-top'>
     <div className='team-tiles'>
-        Jay Nappone
+        Jay Noppone P
     </div>
     <div className='team-tiles'>
         Arbab Husain
@@ -20,7 +20,7 @@ export default function Team() {
     <div className='team-tiles'>
         
         <div className='team-name'>
-        Rori ...
+        Rori Olaniyi
         </div>
     </div>
 
