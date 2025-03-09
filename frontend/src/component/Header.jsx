@@ -7,7 +7,9 @@ export default function Header() {
   return (
     <div className='header-container'>
       <Link href="/" className="header-logo-container">
-        <h1>CashCat</h1>
+        <Link href="/" className="cursor-pointer">
+          <h1>CashCat</h1>
+        </Link>
         <Cat />
       </Link>
 

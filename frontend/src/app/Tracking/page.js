@@ -44,7 +44,7 @@ export default function Tracking() {
                 return;
             }
             try {
-                const response = await fetch("http://127.0.0.1:5000/get_useraccount_id", {
+                const response = await fetch("https://cashcat.onrender.com/get_useraccount_id", {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -69,15 +69,16 @@ export default function Tracking() {
         }
     }, [userAccountId]);
 
-    const fetchTransactions = async () => {
-        try {
-            const response = await fetch(`http://127.0.0.1:5000/nessie_getuserpurchases?user_account_id=${userAccountId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            const data = await response.json();
+        const fetchTransactions = async () => {
+            try {
+                console.log(userAccountId);
+                const response = await fetch(`https://cashcat.onrender.com/nessie_getuserpurchases?user_account_id=${userAccountId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                const data = await response.json();
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');

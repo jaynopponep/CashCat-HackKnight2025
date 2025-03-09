@@ -6,27 +6,45 @@ import { Cat, ArrowLeft } from 'lucide-react';
 const ChatPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { text: "Hi I'm Ozzy, ask me anything about finances! My advice isn't solid so I'm not liable for anything!", sender: 'bot' }
+    { text: "Meow, I'm Ozzy! Ask me anything about finances and budgeting! 😺", sender: 'bot' }
   ]);
   const [inputText, setInputText] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (inputText.trim()) {
-      setMessages([...messages, { text: inputText, sender: 'user' }]);
+      const userMessage = { text: inputText, sender: 'user' };
+      setMessages(prev => [...prev, userMessage]);
       setInputText('');
-      
-      //connect the rag here @jay @arbab
-      setTimeout(() => {
-        setMessages(prev => [...prev, { 
-          text: "I'm connecting to your financial database. Please note that my advice is for informational purposes only.", 
-          sender: 'bot' 
-        }]);
-      }, 1000);
+      setLoading(true);
+
+      try {
+        const response = await fetch("https://cashcat.onrender.com/prompt_cashcat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt: userMessage.text }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error("Error fetching bot response");
+        }
+
+        const botMessage = { text: data.result, sender: 'bot' };
+        setMessages(prev => [...prev, botMessage]);
+      } catch (error) {
+        console.error("Error fetching bot response:", error);
+        setMessages(prev => [...prev, { text: "Sorry, I couldn't process that. Try again.", sender: 'bot' }]);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -47,15 +65,15 @@ const ChatPopup = () => {
             className="text-white p-3 rounded-t-lg flex justify-between items-center"
           >
             <div className="flex items-center">
-              <Cat size={24} className="mr-2" />
-              <span className="font-medium">Financial Assistant</span>
+              <Cat size={34} className="mr-2" />
+              <span className="font-medium">Assistant Ozzy</span>
             </div>
             <button onClick={toggleChat} className="text-white hover:text-gray-200">
-              <ArrowLeft size={20} />
+              <ArrowLeft size={30} />
             </button>
           </div>
           
-          <div className="flex-1 p-3 overflow-y-auto bg-[var(--background-light)] flex flex-col items-center">
+          <div className="flex-1 px-6 py-4 overflow-y-auto bg-[var(--background-light)] flex flex-col">
             {messages.map((msg, index) => (
               <div
                 key={index}
@@ -72,14 +90,14 @@ const ChatPopup = () => {
           
           <form onSubmit={handleSubmit} className="border-t border-[var(--border-color)] p-4">
             <div className="flex">
-            <input
-  type="text"
-  value={inputText}
-  onChange={(e) => setInputText(e.target.value)}
-  placeholder="Type a message..."
-  className="flex-1 border border-[var(--border-color)] rounded-l-lg px-4 py-3 focus:outline-none text-black"
-  style={{ color: 'black' }}
-/>
+              <input
+                type="text"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder="Type a message..."
+                className="flex-1 border border-[var(--border-color)] rounded-l-lg px-4 py-3 focus:outline-none text-black"
+                style={{ color: 'black' }}
+              />
               <button 
                 type="submit" 
                 style={{ backgroundColor: 'var(--component)' }}
