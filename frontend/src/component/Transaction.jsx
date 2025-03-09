@@ -4,8 +4,9 @@ import "./components.css"
 function Transaction({ info }) {
   return (
       <div className='transaction-container'>
-        <p>Amount: ${info.amount}</p>
-        <p>Description: {info.description}</p>
+        <p>{info.description}</p>
+        <p>-${info.amount}</p>
+        
       </div>
   )
 }
