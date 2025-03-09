@@ -14,7 +14,7 @@ export default function Header() {
         <div className="header-links-container">
             <ul>
                 <li><Link href="/Tracking" className="transition hover:text-red-300/75">Tracking</Link></li>
-                <li><a className="transition hover:text-red-300/75" href="#">Budget</a></li>
+                <li><Link className="transition hover:text-red-300/75" href="/Budget">Budget</Link></li>
                 <li><Link className="transition hover:text-red-300/75" href="/Team">Team</Link></li>
             </ul>
         </div>
