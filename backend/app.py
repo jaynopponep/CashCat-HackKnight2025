@@ -70,7 +70,7 @@ def login():
         access_token = create_access_token(identity=username)
         return jsonify({"message": "login successful", "jwt_token": access_token}), 200
     except Exception as e:
-        return jsonify({"error": "Internal server error"}), 500
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
 
 @app.route('/get_useraccount_id', methods=['GET'])
 @jwt_required()
