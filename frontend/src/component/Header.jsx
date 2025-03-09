@@ -6,10 +6,10 @@ import Link from 'next/link'
 export default function Header() {
   return (
     <div className='header-container'>
-      <Link href="/" className="header-logo-container">
-        <Link href="/" className="cursor-pointer">
+      <Link href="/" className="header-logo-container cursor-pointer">
+        
           <h1>CashCat</h1>
-        </Link>
+        
         <Cat />
       </Link>
 

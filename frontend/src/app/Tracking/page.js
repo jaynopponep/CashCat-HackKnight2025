@@ -36,6 +36,9 @@ export default function Tracking() {
     const [userAccountId, setUserAccountId] = useState(null);
     const [error, setError] = useState(null);
     const [display, setDisplay] = useState([]);
+    const [chartLabels, setChartLabels] = useState([]);
+    const [chartAmounts, setChartAmounts] = useState([]);
+
 
     useEffect(() => {
         const fetchAccIdWithToken = async () => {
@@ -84,16 +87,34 @@ export default function Tracking() {
           if (!response.ok) {
               throw new Error('Network response was not ok');
           }
-          const extractedTransactions = data.map(transaction => ({
-            amount: transaction.amount,
-            description: transaction.description || `Transaction ${transaction.id}`, // Fallback for missing descriptions
-          }));
+  
+          // Extract transactions
+          const extractedTransactions = data.map((transaction, index) => {
+              let assignedMonth;
+              const totalTransactions = data.length;
+              const third = Math.ceil(totalTransactions / 3); // Divide data into 3 parts
+  
+              if (index < third) {
+                  assignedMonth = "January";
+              } else if (index < 2 * third) {
+                  assignedMonth = "February";
+              } else {
+                  assignedMonth = "March";
+              }
+  
+              return {
+                  amount: transaction.amount,
+                  description: transaction.description || `Transaction ${transaction.id}`, // Fallback for missing descriptions
+                  month: assignedMonth, // Artificial month assignment
+              };
+          });
+  
           setDisplay(extractedTransactions);
-
+  
           // Aggregate transactions with the same description
           const transactionMap = new Map();
-          data.forEach(transaction => {
-              const description = transaction.description || `Transaction ${transaction.id}`; // Fallback for missing descriptions
+          extractedTransactions.forEach(transaction => {
+              const description = transaction.description;
               if (transactionMap.has(description)) {
                   transactionMap.set(description, transactionMap.get(description) + transaction.amount);
               } else {
@@ -106,29 +127,43 @@ export default function Tracking() {
               description,
               amount,
           }));
-  
           setTransactions(aggregatedTransactions);
+  
+          // Group transactions by assigned month
+          const monthlySpending = { January: 0, February: 0, March: 0 };
+          extractedTransactions.forEach(({ amount, month }) => {
+              monthlySpending[month] += amount;
+          });
+  
+          // Convert into arrays for chart
+          setChartLabels(Object.keys(monthlySpending));
+          setChartAmounts(Object.values(monthlySpending));
+  
       } catch (error) {
           setError('Error fetching data');
           console.error('Error:', error);
       }
   };
+  
+  
 
   const labels = transactions.map(t => t.description);
   const amounts = transactions.map(t => t.amount);
   
   const chartData = {
-      labels,
-      datasets: [
-          {
-              label: 'Transaction Amount ($)',
-              data: amounts,
-              borderColor: 'rgba(75,192,192,1)',
-              backgroundColor: 'rgba(75,192,192,0.2)',
-              fill: true,
-          }
-      ]
-  };
+    labels: chartLabels, // ["January", "February", "March"]
+    datasets: [
+        {
+            label: 'Total Monthly Spending ($)',
+            data: chartAmounts, // Total amount spent per month
+            borderColor: 'rgba(75,192,192,1)',
+            backgroundColor: 'rgba(75,192,192,0.2)',
+            fill: true,
+            tension: 0.4, // Smooth curve
+        }
+    ]
+};
+
   
   const barChartData = {
       labels,
@@ -187,7 +222,7 @@ export default function Tracking() {
                     <h2>Dashboard</h2>
 
                     <div className='chart-wrapper'>
-                        <h3>Transaction Trend</h3>
+                        <h3>Monthly Spending</h3>
                         <Line data={chartData} />
                     </div>
 
@@ -197,7 +232,7 @@ export default function Tracking() {
                     </div>
 
                     <div className='chart-wrapper'>
-                        <h3>Transaction Distribution</h3>
+                        <h3>Categorical Breakdown</h3>
                         <Pie data={pieChartData} />
                     </div>
 

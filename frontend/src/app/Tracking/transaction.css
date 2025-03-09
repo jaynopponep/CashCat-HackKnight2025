@@ -37,14 +37,13 @@
 
 .graph-area {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
+    justify-content: space-around; /* Ensures even spacing */
+    gap: 20px; /* Adjust spacing between charts */
 }
 
 .chart-wrapper {
-    width: 45%; 
+    width: 45%;  /* Each chart takes almost half of the container */
     max-width: 400px;
     height: 250px;
     padding: 10px;
