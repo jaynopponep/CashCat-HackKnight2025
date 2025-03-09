@@ -6,7 +6,7 @@ import { Cat, ArrowLeft } from 'lucide-react';
 const ChatPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { text: "Hi I'm Ozzy, ask me anything about finances! My advice isn't solid so I'm not liable for anything!", sender: 'bot' }
+    { text: "Meow, I'm Ozzy! Ask me anything about finances and budgeting! 😺", sender: 'bot' }
   ]);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(false);
@@ -66,7 +66,7 @@ const ChatPopup = () => {
           >
             <div className="flex items-center">
               <Cat size={34} className="mr-2" />
-              <span className="font-medium">Financial Assistant</span>
+              <span className="font-medium">Ozzy</span>
             </div>
             <button onClick={toggleChat} className="text-white hover:text-gray-200">
               <ArrowLeft size={30} />
