@@ -26,7 +26,7 @@ const EnhancedPostList = () => {
           id: index,
           user: {
             name: post.username || "AAA",
-            handle: "@" + post.username,
+            handle: "@" + post.username.toLowerCase(),
             avatar: post.username ? post.username.charAt(0).toUpperCase() + post.username.charAt(1).toUpperCase() : "AA",
           },
           content: post.content || "AAA",
