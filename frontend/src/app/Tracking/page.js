@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import Transaction from '@/component/Transaction'
 import "./transaction.css"
+import dynamic from 'next/dynamic';
 import Header from '@/component/Header'
 import { Line, Bar, Pie, Doughnut, Radar, Bubble } from 'react-chartjs-2';
 import {
@@ -18,19 +19,6 @@ import {
   RadialLinearScale
 } from 'chart.js';
 
-ChartJS.register(
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  ArcElement,
-  RadialLinearScale
-);
-
 const chartOptions = {
   plugins: {
     legend: {
@@ -43,6 +31,13 @@ const chartOptions = {
 };
 
 export default function Tracking() {
+
+
+    const Line = dynamic(() => import("react-chartjs-2").then((mod) => mod.Line), { ssr: false });
+    const Bar = dynamic(() => import("react-chartjs-2").then((mod) => mod.Bar), { ssr: false });
+    const Pie = dynamic(() => import("react-chartjs-2").then((mod) => mod.Pie), { ssr: false });
+    const Doughnut = dynamic(() => import("react-chartjs-2").then((mod) => mod.Doughnut), { ssr: false });
+
     const [transactions, setTransactions] = useState([]);
     const [userAccountId, setUserAccountId] = useState(null);
     const [error, setError] = useState(null);
@@ -52,6 +47,18 @@ export default function Tracking() {
 
 
     useEffect(() => {
+        ChartJS.register(
+            LineElement,
+            CategoryScale,
+            LinearScale,
+            PointElement,
+            Title,
+            Tooltip,
+            Legend,
+            BarElement,
+            ArcElement,
+            RadialLinearScale
+        );
         const fetchAccIdWithToken = async () => {
             const token = localStorage.getItem("token");
             if (!token) {
@@ -116,13 +123,12 @@ export default function Tracking() {
               return {
                   amount: transaction.amount,
                   description: transaction.description || `Transaction ${transaction.id}`, // Fallback for missing descriptions
-                  month: assignedMonth, // Artificial month assignment
+                  month: assignedMonth,
               };
           });
   
           setDisplay(extractedTransactions);
   
-          // Aggregate transactions with the same description
           const transactionMap = new Map();
           extractedTransactions.forEach(transaction => {
               const description = transaction.description;
@@ -133,20 +139,17 @@ export default function Tracking() {
               }
           });
   
-          // Convert aggregated map to array
           const aggregatedTransactions = Array.from(transactionMap.entries()).map(([description, amount]) => ({
               description,
               amount,
           }));
           setTransactions(aggregatedTransactions);
   
-          // Group transactions by assigned month
           const monthlySpending = { January: 0, February: 0, March: 0 };
           extractedTransactions.forEach(({ amount, month }) => {
               monthlySpending[month] += amount;
           });
   
-          // Convert into arrays for chart
           setChartLabels(Object.keys(monthlySpending));
           setChartAmounts(Object.values(monthlySpending));
   
