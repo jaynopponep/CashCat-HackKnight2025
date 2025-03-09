@@ -14,19 +14,19 @@ export default function Header() {
       <div className="header-links-container">
         <ul>
           <li>
-            <a className="transition hover:text-red-300/75" href="#">
+            <Link className="transition hover:text-red-300/75" href="/Tracking">
               Tracking
-            </a>
+            </Link>
           </li>
           <li>
-            <a className="transition hover:text-red-300/75" href="#">
+            <Link className="transition hover:text-red-300/75" href="/Budget">
               Budget
-            </a>
+            </Link>
           </li>
           <li>
-            <a className="transition hover:text-red-300/75" href="#">
-              About
-            </a>
+            <Link className="transition hover:text-red-300/75" href="/Team">
+              Team
+            </Link>
           </li>
           <li>
             <Link href="/Social" className="transition hover:text-red-300/75">
