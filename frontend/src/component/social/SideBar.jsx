@@ -1,16 +1,30 @@
-import React, {useEffect, useState} from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 import { DollarSign, Users, HelpCircle, TrendingUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const SideBar = ({ user }) => {
-  const router = useRouter()
+  const router = useRouter();
   const phrases = [
-      "No $6 latte today.. 😾",
-      "Do you really need that subscription.. 😼",
-      "Takeout today, but no churru for me? 😿",
-      "Maybe those eggs will be down tomorrow... 🥚",
-  ]
+    "No $6 latte today.. 😾",
+    "Do you really need that subscription.. 😼",
+    "Takeout today, but no churru for me? 😿",
+    "Maybe those eggs will be down tomorrow... 🥚",
+  ];
   const [randomPhrase, setRandomPhrase] = useState('');
+
   useEffect(() => {
     document.documentElement.style.setProperty('--background', '#f00d09');
     document.documentElement.style.setProperty('--component', '#f00d09');
@@ -24,9 +38,20 @@ const SideBar = ({ user }) => {
     router.push(path);
   };
 
+  // Dummy Savings Trend Data
+  const savingsData = {
+    labels: ['January', 'February', 'March'],
+    datasets: [
+      {
+        label: 'Savings ($)',
+        data: [3000, 2600, 2900],
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+      },
+    ],
+  };
+
   return (
     <div className="w-64 text-white flex flex-col mt-9" style={{ backgroundColor: 'var(--background)' }}>
-      {}
       <div className="p-4 border-b" style={{ borderColor: 'var(--component-hover)' }}>
         <h1 className="text-2xl font-bold cursor-pointer" onClick={() => handleNavigation('/')}>CashCat</h1>
         <p style={{ color: '#ffcccc' }}>{randomPhrase}</p>
@@ -46,15 +71,12 @@ const SideBar = ({ user }) => {
       <nav className="flex-1 flex flex-col space-y-8 px-4">
         <NavItem icon={<DollarSign />} label="Budget" onClick={() => handleNavigation('/Budget')} />
 
-        <div 
-          className="cursor-pointer flex flex-col items-center justify-center p-4 rounded border border-gray-400 w-full h-40"
-          style={{ backgroundColor: 'var(--component)' }}
-          onClick={() => handleNavigation('/')}
-        >
-          <span className="text-xl font-bold">Arbab</span>
-          <span className="text-sm">Data Visualization</span>
+        {/* Savings Trend Chart */}
+        <div className="p-4 bg-white rounded-lg text-gray-800 w-full">
+          <h3 className="text-md font-semibold text-center text-black mb-2">Savings Trend</h3>
+          <Bar data={savingsData} />
         </div>
-        
+
         <NavItem icon={<Users />} label="Friends" onClick={() => handleNavigation('/')} />
         <NavItem 
           icon={<HelpCircle />} 
