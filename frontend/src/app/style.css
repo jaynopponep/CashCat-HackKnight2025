@@ -34,25 +34,24 @@ body{
     margin-top:40px;
   }
 
-.butt{
+.button {
     background-color:#f00d09;
-   padding:15px;
-   margin-left:65px;
-   border-radius:40px;
-   width:380px;
-   margin-top:40px;
-   color:white;
-   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-   font-weight: bold;
+    padding:15px;
+    margin-left:65px;
+    border-radius:40px;
+    width:380px;
+    margin-top:40px;
+    color:white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
 }
-
-
 
 :root {
     --background-component: #f00d09;
     --component: #cf0b08;
     --component-hover: #a70806;
-    --component-text: ##ffffff;
+    --component-text: #ffffff;
 }
 
 .container{
@@ -181,7 +180,7 @@ body{
     width: 100%;
     height: auto;
     border-radius: 0.75rem;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
     justify-content: center;
     background: white;
     padding: 20px;
@@ -246,7 +245,7 @@ body{
 .team-tiles{
     width: 350px;
     height: 350px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
     margin:10px;
 }
 
