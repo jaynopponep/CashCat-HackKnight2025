@@ -72,13 +72,14 @@ const ChatPopup = () => {
           
           <form onSubmit={handleSubmit} className="border-t border-[var(--border-color)] p-4">
             <div className="flex">
-              <input
-                type="text"
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                placeholder="Type a message..."
-                className="flex-1 border border-[var(--border-color)] rounded-l-lg px-4 py-3 focus:outline-none"
-              />
+            <input
+  type="text"
+  value={inputText}
+  onChange={(e) => setInputText(e.target.value)}
+  placeholder="Type a message..."
+  className="flex-1 border border-[var(--border-color)] rounded-l-lg px-4 py-3 focus:outline-none text-black"
+  style={{ color: 'black' }}
+/>
               <button 
                 type="submit" 
                 style={{ backgroundColor: 'var(--component)' }}
