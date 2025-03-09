@@ -1,9 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { DollarSign, Users, HelpCircle, TrendingUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const SideBar = ({ user }) => {
-  const router = useRouter();
+  const router = useRouter()
+  const phrases = [
+      "No $6 latte today.. 😾",
+      "Do you really need that subscription.. 😼",
+      "Takeout today, but no churru for me? 😿"
+  ]
+  const [randomPhrase, setRandomPhrase] = useState('');
+  useEffect(() => {
+    document.documentElement.style.setProperty('--background', '#f00d09');
+    document.documentElement.style.setProperty('--component', '#f00d09');
+    document.documentElement.style.setProperty('--component-hover', '#ff7700');
+    document.documentElement.style.setProperty('--border-color', '#dddddd');
+    document.documentElement.style.setProperty('--text-primary', '#ffffff');
+    setRandomPhrase(phrases[Math.floor(Math.random() * phrases.length)]);
+  }, []);
 
   const handleNavigation = (path) => {
     router.push(path);
@@ -11,13 +25,12 @@ const SideBar = ({ user }) => {
 
   return (
     <div className="w-64 text-white flex flex-col" style={{ backgroundColor: 'var(--background)' }}>
-      {/* Header */}
+      {}
       <div className="p-4 border-b" style={{ borderColor: 'var(--component-hover)' }}>
         <h1 className="text-2xl font-bold cursor-pointer" onClick={() => handleNavigation('/')}>CashCat</h1>
-        <p style={{ color: '#ffcccc' }}>Smart Social Finance</p>
+        <p style={{ color: '#ffcccc' }}>{randomPhrase}</p>
       </div>
-      
-      {/* Balance Section */}
+
       <div className="p-4 mb-6">
         <div className="bg-white rounded-lg p-3 text-gray-800">
           <div style={{ color: 'var(--component)' }}>Your Balance</div>
@@ -28,12 +41,10 @@ const SideBar = ({ user }) => {
           </div>
         </div>
       </div>
-      
-      {/* Navigation Section */}
+
       <nav className="flex-1 flex flex-col space-y-8 px-4">
         <NavItem icon={<DollarSign />} label="Budget" onClick={() => handleNavigation('/')} />
-        
-        {/* Data Visualization Section */}
+
         <div 
           className="cursor-pointer flex flex-col items-center justify-center p-4 rounded border border-gray-400 w-full h-40"
           style={{ backgroundColor: 'var(--component)' }}
@@ -50,8 +61,7 @@ const SideBar = ({ user }) => {
           onClick={() => handleNavigation('/help')} 
         />
       </nav>
-      
-      {/* Footer with User Info */}
+
       <div className="p-4 border-t mt-6" style={{ borderColor: 'var(--component-hover)' }}>
         <div className="flex items-center">
           <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3" style={{ color: 'var(--component)' }}>
