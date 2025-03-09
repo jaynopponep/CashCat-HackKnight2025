@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+import requests
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 from pymongo import MongoClient
 from dotenv import load_dotenv
@@ -9,8 +11,14 @@ from langchain_core.messages import HumanMessage, SystemMessage
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 conn_string = os.environ.get("MONGODB_CONN_STRING")
 JWT_SECRET = os.environ.get("JWT_SECRET_KEY")
+try:
+    NESSIEKEY = os.environ.get("NESSIEAPIKEY")
+except Exception as e:
+    print("couldn't get Nessie key")
+    exit(1)
 app.config["JWT_SECRET_KEY"] = JWT_SECRET
 OPENAI_KEY = os.getenv('OPENAI_KEY')
 jwt = JWTManager(app)
@@ -33,7 +41,6 @@ def register():
         password = data.get("password")
         if not username or not password or not email:
             return jsonify({"error": "missing fields"}), 400
-
         if user_auth.find_one({"username": username}):
             return jsonify({"error": "username already taken!"}), 409
         if user_auth.find_one({"email": email}):
@@ -41,8 +48,6 @@ def register():
         hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         user_data = {"username": username, "email": email, "password": hashed_pw.decode('utf-8')}
-        # if i have time, planning to hash the passwords before saving them
-        # but atleast we have demonstration
         user_auth.insert_one(user_data)
 
         return jsonify({"message": "User registration successful"}), 200
@@ -92,6 +97,90 @@ def prompt_cashcat():
         history.append(HumanMessage(content=user_prompt))
         history.append(SystemMessage(content=result["answer"]))
         return jsonify({"result": result['answer']}), 200
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_getallcustomers', methods=['GET'])
+def getallcustomers():
+    try:
+        response = requests.get(f"http://api.nessieisreal.com/customers?key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_getcustomerinfo', methods=['GET'])
+def getcustomerinfo():
+    try:
+        user_id = request.args.get('id')
+        if not user_id:
+            return jsonify({"message": "missing fields"}), 500
+        response = requests.get(f"http://api.nessieisreal.com/customers/{user_id}?key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_getallaccounts', methods=['GET'])
+def getallaccounts():
+    try:
+        response = requests.get(f"http://api.nessieisreal.com/accounts?type=Checking&key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_getaccountinfo', methods=['GET'])
+def getaccountinfo():
+    try:
+        account_id = request.args.get('account_id')
+        response = requests.get(f"http://api.nessieisreal.com/accounts/{account_id}?key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_getmerchants', methods=['GET'])
+def getmerchants():
+    try:
+        # note there are more merchants, but the best constraints i've found is lat=42, long=-76, 25 mi radius
+        # 100% subject to change though
+        response = requests.get(f"http://api.nessieisreal.com/merchants?lat=42&lng=-76&rad=25&key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_makepurchase', methods=['POST'])
+def makepurchase():
+    try:
+        buyer_id = request.args.get('buyer_id')
+        data = request.json
+        merchant_id = data.get("merchant_id")
+        amount = data.get("amount")
+        description = data.get("description")
+        purchase_payload = {
+                "merchant_id": merchant_id,
+                "medium": "balance",
+                "purchase_date": "2025-03-08",
+                "amount": amount,
+                "status": "completed",
+                "description": description 
+                }
+        response = requests.post(f"http://api.nessieisreal.com/accounts/{buyer_id}/purchases?key={NESSIEKEY}",
+                                json=purchase_payload)
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"message": "internal server error"}), 500
+
+@app.route('/nessie_getuserpurchases', methods=['GET'])
+def getuserpurchases():
+    try:
+        user_account_id = request.args.get('user_account_id')
+        response = requests.get(f"http://api.nessieisreal.com/accounts/{user_account_id}/purchases?key={NESSIEKEY}")
+        data = response.json()
+        return jsonify(data)
     except Exception as e:
         return jsonify({"message": "internal server error"}), 500
 
