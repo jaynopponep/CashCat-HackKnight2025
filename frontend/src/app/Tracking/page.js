@@ -35,6 +35,7 @@ export default function Tracking() {
     const [transactions, setTransactions] = useState([]);
     const [userAccountId, setUserAccountId] = useState(null);
     const [error, setError] = useState(null);
+    const [display, setDisplay] = useState([]);
 
     useEffect(() => {
         const fetchAccIdWithToken = async () => {
@@ -69,77 +70,97 @@ export default function Tracking() {
         }
     }, [userAccountId]);
 
-        const fetchTransactions = async () => {
-            try {
-                console.log(userAccountId);
-                const response = await fetch(`https://cashcat.onrender.com/nessie_getuserpurchases?user_account_id=${userAccountId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                const data = await response.json();
+    const fetchTransactions = async () => {
+      try {
+          console.log(userAccountId);
+          const response = await fetch(`https://cashcat.onrender.com/nessie_getuserpurchases?user_account_id=${userAccountId}`, {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+          });
+          const data = await response.json();
+  
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          const extractedTransactions = data.map(transaction => ({
+            amount: transaction.amount,
+            description: transaction.description || `Transaction ${transaction.id}`, // Fallback for missing descriptions
+          }));
+          setDisplay(extractedTransactions);
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const extractedTransactions = data.map(transaction => ({
-                amount: transaction.amount,
-                description: transaction.description || `Transaction ${transaction.id}`, // Fallback for missing descriptions
-            }));
-            setTransactions(extractedTransactions);
-        } catch (error) {
-            setError('Error fetching data');
-            console.error('Error:', error);
-        }
-    };
+          // Aggregate transactions with the same description
+          const transactionMap = new Map();
+          data.forEach(transaction => {
+              const description = transaction.description || `Transaction ${transaction.id}`; // Fallback for missing descriptions
+              if (transactionMap.has(description)) {
+                  transactionMap.set(description, transactionMap.get(description) + transaction.amount);
+              } else {
+                  transactionMap.set(description, transaction.amount);
+              }
+          });
+  
+          // Convert aggregated map to array
+          const aggregatedTransactions = Array.from(transactionMap.entries()).map(([description, amount]) => ({
+              description,
+              amount,
+          }));
+  
+          setTransactions(aggregatedTransactions);
+      } catch (error) {
+          setError('Error fetching data');
+          console.error('Error:', error);
+      }
+  };
 
-    const labels = transactions.map(t => t.description);
-
-    const chartData = {
-        labels,
-        datasets: [
-            {
-                label: 'Transaction Amount ($)',
-                data: transactions.map(t => t.amount),
-                borderColor: 'rgba(75,192,192,1)',
-                backgroundColor: 'rgba(75,192,192,0.2)',
-                fill: true,
-            }
-        ]
-    };
-
-    const barChartData = {
-        labels,
-        datasets: [
-            {
-                label: 'Transaction Amount ($)',
-                data: transactions.map(t => t.amount),
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-            }
-        ]
-    };
-
-    // Additional Charts
-    const pieChartData = {
-        labels,
-        datasets: [
-            {
-                data: transactions.map(t => t.amount),
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-            }
-        ]
-    };
-
-    const doughnutChartData = {
-        labels,
-        datasets: [
-            {
-                data: transactions.map(t => t.amount),
-                backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#F1C40F', '#8E44AD'],
-            }
-        ]
-    };
+  const labels = transactions.map(t => t.description);
+  const amounts = transactions.map(t => t.amount);
+  
+  const chartData = {
+      labels,
+      datasets: [
+          {
+              label: 'Transaction Amount ($)',
+              data: amounts,
+              borderColor: 'rgba(75,192,192,1)',
+              backgroundColor: 'rgba(75,192,192,0.2)',
+              fill: true,
+          }
+      ]
+  };
+  
+  const barChartData = {
+      labels,
+      datasets: [
+          {
+              label: 'Transaction Amount ($)',
+              data: amounts,
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          }
+      ]
+  };
+  
+  const pieChartData = {
+      labels,
+      datasets: [
+          {
+              data: amounts,
+              backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+          }
+      ]
+  };
+  
+  const doughnutChartData = {
+      labels,
+      datasets: [
+          {
+              data: amounts,
+              backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#F1C40F', '#8E44AD'],
+          }
+      ]
+  };
+  
 
     return (
         <div className='tracking'>
@@ -149,8 +170,8 @@ export default function Tracking() {
                     <h2>Transaction History</h2>
                     <div>
                         {error && <p>{error}</p>}
-                        {transactions.length > 0 ? (
-                            transactions.map((purchase, key) => (
+                        {display.length > 0 ? (
+                            display.map((purchase, key) => (
                                 <Transaction
                                     key={key}
                                     info={{ amount: purchase.amount, description: purchase.description }}
