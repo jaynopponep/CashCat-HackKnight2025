@@ -3,12 +3,13 @@
     display: flex;
     flex-direction: row;
     color: black;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     
 }
 
 
-.tracking-transaction{
+.tracking-transaction {
     display: flex;
     flex-direction: column;
     width: 650px;
@@ -17,19 +18,37 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.tracking-graphs{
+.tracking-graphs {
     background: white;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     width: 100%;
+    padding: 20px;
 }
 
-.tracking-info{
+.tracking-info {
     background: white;
-
 }
-.tracking-container h2{
+
+.tracking-container h2 {
     padding: 6px 8px;
     font-weight: bold;
     font-size: x-large;
+}
 
+.graph-area {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.chart-wrapper {
+    width: 45%; /* Adjust width as needed */
+    max-width: 400px;
+    height: 250px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 4px 12px;
 }

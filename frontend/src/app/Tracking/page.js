@@ -3,6 +3,29 @@ import React, { useState, useEffect } from 'react'
 import Transaction from '@/component/Transaction'
 import "./transaction.css"
 import Header from '@/component/Header'
+import { Line, Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+} from 'chart.js';
+
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement
+);
 
 export default function Tracking() {
     const [transactions, setTransactions] = useState([]);
@@ -35,6 +58,30 @@ export default function Tracking() {
         fetchTransactions();
     }, []);  // Empty dependency array to fetch data only once when the component mounts
 
+    const chartData = {
+        labels: transactions.map((t, index) => `Transaction ${index + 1}`),
+        datasets: [
+            {
+                label: 'Transaction Amount ($)',
+                data: transactions.map(t => t.amount),
+                borderColor: 'rgba(75,192,192,1)',
+                backgroundColor: 'rgba(75,192,192,0.2)',
+                fill: true,
+            }
+        ]
+    };
+
+    const barChartData = {
+        labels: transactions.map((t, index) => `Transaction ${index + 1}`),
+        datasets: [
+            {
+                label: 'Transaction Amount ($)',
+                data: transactions.map(t => t.amount),
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            }
+        ]
+    };
+
     return (
         <div className='tracking'>
             <Header />
@@ -56,7 +103,20 @@ export default function Tracking() {
                 <div className='tracking-graphs'>
                     <h2>Dashboard</h2>
                     {/* Add other graphing components or statistics here */}
-                    
+                      <div className='graph-area'>
+                      <div className='chart-wrapper'>
+                            <Line data={chartData} options={{ maintainAspectRatio: false }} />
+                        </div>
+                        <div className='chart-wrapper'>
+                            <Bar data={barChartData} options={{ maintainAspectRatio: false }} />
+                        </div>
+                        <div className='chart-wrapper'>
+                            <Line data={chartData} options={{ maintainAspectRatio: false }} />
+                        </div>
+                        <div className='chart-wrapper'>
+                            <Bar data={barChartData} options={{ maintainAspectRatio: false }} />
+                        </div>
+                      </div>
                 </div>
             </div>
         </div>
