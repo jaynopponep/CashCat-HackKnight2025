@@ -9,24 +9,42 @@ const ChatPopup = () => {
     { text: "Hi I'm Ozzy, ask me anything about finances! My advice isn't solid so I'm not liable for anything!", sender: 'bot' }
   ]);
   const [inputText, setInputText] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (inputText.trim()) {
-      setMessages([...messages, { text: inputText, sender: 'user' }]);
+      const userMessage = { text: inputText, sender: 'user' };
+      setMessages(prev => [...prev, userMessage]);
       setInputText('');
-      
-      // this is where the rag goes @jay @arbab
-      setTimeout(() => {
-        setMessages(prev => [...prev, { 
-          text: "I'm connecting to your financial database. Please note that my advice is for informational purposes only.", 
-          sender: 'bot' 
-        }]);
-      }, 1000);
+      setLoading(true);
+
+      try {
+        const response = await fetch("https://cashcat.onrender.com/prompt_cashcat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt: userMessage.text }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error("Error fetching bot response");
+        }
+
+        const botMessage = { text: data.result, sender: 'bot' };
+        setMessages(prev => [...prev, botMessage]);
+      } catch (error) {
+        console.error("Error fetching bot response:", error);
+        setMessages(prev => [...prev, { text: "Sorry, I couldn't process that. Try again.", sender: 'bot' }]);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
