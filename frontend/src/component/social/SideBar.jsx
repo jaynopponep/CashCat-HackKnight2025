@@ -53,7 +53,7 @@ const SideBar = ({ user }) => {
   return (
     <div className="w-64 text-white flex flex-col mt-9" style={{ backgroundColor: 'var(--background)' }}>
       <div className="p-4 border-b" style={{ borderColor: 'var(--component-hover)' }}>
-        <h1 className="text-2xl font-bold cursor-pointer" onClick={() => handleNavigation('/')}>CashCat</h1>
+        <h1 className="text-l font-bold cursor-pointer" onClick={() => handleNavigation('/')}>Message of the Day:</h1>
         <p style={{ color: '#ffcccc' }}>{randomPhrase}</p>
       </div>
 

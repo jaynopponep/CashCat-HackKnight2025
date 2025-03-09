@@ -31,6 +31,17 @@ ChartJS.register(
   RadialLinearScale
 );
 
+const chartOptions = {
+  plugins: {
+    legend: {
+      position: "right", // Moves legend to the right
+      labels: {
+        boxWidth: 12, // Adjusts the size of the legend box
+      },
+    },
+  },
+};
+
 export default function Tracking() {
     const [transactions, setTransactions] = useState([]);
     const [userAccountId, setUserAccountId] = useState(null);

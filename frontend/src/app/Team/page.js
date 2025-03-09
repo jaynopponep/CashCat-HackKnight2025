@@ -1,6 +1,7 @@
 import React from 'react'
 import "../style.css"
 import Header from '@/component/Header';
+import Image from 'next/image';
 
 export default function Team() {
   return (
@@ -10,9 +11,11 @@ export default function Team() {
   <div className='team-tiles-container'>
     <div className='team-top'>
     <div className='team-tiles'>
-        Jay Noppone P
+    <Image src={"/Jay.png"} width={300} height={300} alt='Jay'/>
+    Jay Noppone P.
     </div>
     <div className='team-tiles'>
+        <Image src={"/Arbab.png"} width={300} height={300} alt='Arbab'/>
         Arbab Husain
     </div>
     </div>
@@ -20,13 +23,15 @@ export default function Team() {
     <div className='team-tiles'>
         
         <div className='team-name'>
+        <Image src={"/Rori.png"} width={300} height={300} alt='Rori'/>
         Rori Olaniyi
         </div>
     </div>
 
     
     <div className='team-tiles'>
-        Baljinder Hothi
+    <Image src={"/Jinder.png"} width={300} height={300} alt='Jinder'/>
+    Baljinder Hothi
     </div>
     </div>
   </div>

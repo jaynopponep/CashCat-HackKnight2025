@@ -5,6 +5,7 @@ import SideBar from '../../component/social/SideBar';
 import CreatePost from '../../component/social/CreatePost';
 import EnhancedPostList from '../../component/social/EnhancedPostList';
 import VisualizationPanel from '../../component/social/VisualizationPanel';
+import Header from '@/component/Header';
 
 export default function SocialPage() {
   const [activeTab, setActiveTab] = useState('feed');
@@ -27,6 +28,8 @@ export default function SocialPage() {
   };
 
   return (
+    <div className='flex-col'>
+      <Header></Header>
     <div className="flex h-screen">
       <SideBar user={user} />
       
@@ -45,6 +48,7 @@ export default function SocialPage() {
       </div>
       
       <VisualizationPanel />
+    </div>
     </div>
   );
 }
