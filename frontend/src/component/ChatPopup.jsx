@@ -66,7 +66,7 @@ const ChatPopup = () => {
           >
             <div className="flex items-center">
               <Cat size={34} className="mr-2" />
-              <span className="font-medium">Ozzy</span>
+              <span className="font-medium">Assistant Ozzy</span>
             </div>
             <button onClick={toggleChat} className="text-white hover:text-gray-200">
               <ArrowLeft size={30} />
