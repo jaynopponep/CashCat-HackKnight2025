@@ -50,8 +50,8 @@ def build_rag_chain(api_key):
         "the following pieces of retrieved context to answer the "
         "question. If you don't know the answer, just say "
         "you don't know. Use 2 sentences maximum and keep the answer concise "
-        "At the end, you must state that this is not financial advice, although "
-        "just simply for discussion."
+        "At the end, you must state the following: This is not financial advice, but"
+        "let me know if you have clarifying questions!"
         "\n\n"
         "{context}"
     )
