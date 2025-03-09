@@ -7,7 +7,8 @@ const SideBar = ({ user }) => {
   const phrases = [
       "No $6 latte today.. 😾",
       "Do you really need that subscription.. 😼",
-      "Takeout today, but no churru for me? 😿"
+      "Takeout today, but no churru for me? 😿",
+      "Maybe those eggs will be down tomorrow... 🥚",
   ]
   const [randomPhrase, setRandomPhrase] = useState('');
   useEffect(() => {
@@ -43,7 +44,7 @@ const SideBar = ({ user }) => {
       </div>
 
       <nav className="flex-1 flex flex-col space-y-8 px-4">
-        <NavItem icon={<DollarSign />} label="Budget" onClick={() => handleNavigation('/')} />
+        <NavItem icon={<DollarSign />} label="Budget" onClick={() => handleNavigation('/Budget')} />
 
         <div 
           className="cursor-pointer flex flex-col items-center justify-center p-4 rounded border border-gray-400 w-full h-40"
