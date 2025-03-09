@@ -6,10 +6,10 @@ import Link from 'next/link'
 export default function Header() {
   return (
     <div className='header-container'>
-      <div className="header-logo-container">
+      <Link href="/" className="header-logo-container">
         <h1>CashCat</h1>
         <Cat />
-      </div>
+      </Link>
 
       <div className="header-links-container">
         <ul>

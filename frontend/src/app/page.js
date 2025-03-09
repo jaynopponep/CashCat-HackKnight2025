@@ -65,7 +65,7 @@ export default function Home() {
         <Card text={"Share Your Success With Friends"} desc={"Be the first to let your friends and family find out how successful you were in budgetting"}></Card>
         </div>
         </div>
-      <Footer></Footer>
+      
 
 
       

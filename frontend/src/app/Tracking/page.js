@@ -142,6 +142,7 @@ export default function Tracking() {
 
                 <div className='tracking-graphs'>
                     <h2>Dashboard</h2>
+                    
                 </div>
             </div>
         </div>
