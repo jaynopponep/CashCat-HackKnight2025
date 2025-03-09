@@ -20,7 +20,7 @@ const ChatPopup = () => {
       setMessages([...messages, { text: inputText, sender: 'user' }]);
       setInputText('');
       
-      //connect the rag here @jay @arbab
+      // this is where the rag goes @jay @arbab
       setTimeout(() => {
         setMessages(prev => [...prev, { 
           text: "I'm connecting to your financial database. Please note that my advice is for informational purposes only.", 
@@ -47,15 +47,15 @@ const ChatPopup = () => {
             className="text-white p-3 rounded-t-lg flex justify-between items-center"
           >
             <div className="flex items-center">
-              <Cat size={24} className="mr-2" />
+              <Cat size={34} className="mr-2" />
               <span className="font-medium">Financial Assistant</span>
             </div>
             <button onClick={toggleChat} className="text-white hover:text-gray-200">
-              <ArrowLeft size={20} />
+              <ArrowLeft size={30} />
             </button>
           </div>
           
-          <div className="flex-1 p-3 overflow-y-auto bg-[var(--background-light)] flex flex-col items-center">
+          <div className="flex-1 px-6 py-4 overflow-y-auto bg-[var(--background-light)] flex flex-col">
             {messages.map((msg, index) => (
               <div
                 key={index}
@@ -72,14 +72,14 @@ const ChatPopup = () => {
           
           <form onSubmit={handleSubmit} className="border-t border-[var(--border-color)] p-4">
             <div className="flex">
-            <input
-  type="text"
-  value={inputText}
-  onChange={(e) => setInputText(e.target.value)}
-  placeholder="Type a message..."
-  className="flex-1 border border-[var(--border-color)] rounded-l-lg px-4 py-3 focus:outline-none text-black"
-  style={{ color: 'black' }}
-/>
+              <input
+                type="text"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder="Type a message..."
+                className="flex-1 border border-[var(--border-color)] rounded-l-lg px-4 py-3 focus:outline-none text-black"
+                style={{ color: 'black' }}
+              />
               <button 
                 type="submit" 
                 style={{ backgroundColor: 'var(--component)' }}
