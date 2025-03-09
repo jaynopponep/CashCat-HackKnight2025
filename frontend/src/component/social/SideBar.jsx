@@ -1,12 +1,19 @@
 import React from 'react';
 import { DollarSign, Users, HelpCircle, TrendingUp } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const SideBar = ({ user }) => {
+  const router = useRouter();
+
+  const handleNavigation = (path) => {
+    router.push(path);
+  };
+
   return (
     <div className="w-64 text-white flex flex-col" style={{ backgroundColor: 'var(--background)' }}>
       {/* Header */}
       <div className="p-4 border-b" style={{ borderColor: 'var(--component-hover)' }}>
-        <h1 className="text-2xl font-bold">CashCat</h1>
+        <h1 className="text-2xl font-bold cursor-pointer" onClick={() => handleNavigation('/')}>CashCat</h1>
         <p style={{ color: '#ffcccc' }}>Smart Social Finance</p>
       </div>
       
@@ -23,22 +30,26 @@ const SideBar = ({ user }) => {
       </div>
       
       {/* Navigation Section */}
-      <nav className="flex-1 flex flex-col space-y-8 px-4"> {/* Increased space-y to 8 */}
-    <NavItem icon={<DollarSign />} label="Budget" />
-    
-    {/* Data Visualization Section */}
-    {/* TODO: Replace with an endpoint call to the visualizer code */}
-    <div 
-      className="cursor-pointer flex flex-col items-center justify-center p-4 rounded border border-gray-400 w-full h-40"
-      style={{ backgroundColor: 'var(--component)' }}
-    >
-      <span className="text-xl font-bold">Arbab</span>
-      <span className="text-sm">Data Visualization</span>
-    </div>
-    
-    <NavItem icon={<Users />} label="Friends" />
-    <NavItem icon={<HelpCircle />} label="Help Center" />
-</nav>
+      <nav className="flex-1 flex flex-col space-y-8 px-4">
+        <NavItem icon={<DollarSign />} label="Budget" onClick={() => handleNavigation('/')} />
+        
+        {/* Data Visualization Section */}
+        <div 
+          className="cursor-pointer flex flex-col items-center justify-center p-4 rounded border border-gray-400 w-full h-40"
+          style={{ backgroundColor: 'var(--component)' }}
+          onClick={() => handleNavigation('/')}
+        >
+          <span className="text-xl font-bold">Arbab</span>
+          <span className="text-sm">Data Visualization</span>
+        </div>
+        
+        <NavItem icon={<Users />} label="Friends" onClick={() => handleNavigation('/')} />
+        <NavItem 
+          icon={<HelpCircle />} 
+          label="Help Center" 
+          onClick={() => handleNavigation('/help')} 
+        />
+      </nav>
       
       {/* Footer with User Info */}
       <div className="p-4 border-t mt-6" style={{ borderColor: 'var(--component-hover)' }}>
@@ -56,11 +67,12 @@ const SideBar = ({ user }) => {
   );
 };
 
-const NavItem = ({ icon, label, active = false }) => {
+const NavItem = ({ icon, label, active = false, onClick }) => {
   return (
     <div 
       className="px-4 py-3 cursor-pointer flex items-center rounded"
       style={{ backgroundColor: active ? 'var(--component)' : 'transparent' }}
+      onClick={onClick}
     >
       <div className="mr-3">{icon}</div>
       <span>{label}</span>
