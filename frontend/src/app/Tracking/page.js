@@ -56,6 +56,7 @@ export default function Tracking() {
                 <div className='tracking-graphs'>
                     <h2>Dashboard</h2>
                     {/* Add other graphing components or statistics here */}
+                    
                 </div>
             </div>
         </div>
