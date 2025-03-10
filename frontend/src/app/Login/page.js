@@ -53,7 +53,9 @@ export default function Login() {
                 <input type="password" name="password" className="input-field" placeholder="Enter Password" value={formData.password} onChange={(e) =>
                     setFormData({...formData, password: e.target.value}) } required/>
                 <a href="/forgot-password" className="password">Forgot Password?</a>
+                
                 <button type="submit" className="button">Submit</button>
+                
               </form>
             </div>
           </div>
