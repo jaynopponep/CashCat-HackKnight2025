@@ -12,6 +12,7 @@ export default function Home() {
   const [coins, setCoins] = useState([]);
   const [kittyVisible, setKittyVisible] = useState(false);
   const [financeVisible, setFinanceVisible] = useState(false);
+<<<<<<< HEAD
   const [dollarVisible, setDollarVisible] = useState(false);
   const kittySectionRef = useRef(null);
   const financeSectionRef = useRef(null);
@@ -32,6 +33,25 @@ export default function Home() {
     );
   };
   
+=======
+  const kittySectionRef = useRef(null);
+  const financeSectionRef = useRef(null);
+  const RotatingBanner = () => {
+    return (
+      <div className = "rotating-banner">
+      <div className="rotating-banner-content">
+        <div className="rotating-banner-content">
+          CASH CAT. IS COOL. &nbsp;&nbsp; CASH CAT. IS COOL. &nbsp;&nbsp; 
+          CASH CAT. IS COOL. &nbsp;&nbsp; CASH CAT. IS COOL. &nbsp;&nbsp; 
+          CASH CAT. IS COOL. &nbsp;&nbsp; CASH CAT. IS COOL. &nbsp;&nbsp;
+        </div>
+      </div>
+      </div>
+    );
+  };
+  
+
+>>>>>>> 03ec694 (this is the commit homepage)
   useEffect(() => {
     const interval = setInterval(() => {
       setCoins((prev) => [
@@ -48,7 +68,11 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+<<<<<<< HEAD
     // Create a single observer for all sections
+=======
+    // Create a single observer for both sections
+>>>>>>> 03ec694 (this is the commit homepage)
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -59,9 +83,12 @@ export default function Home() {
           if (entry.target === financeSectionRef.current && entry.isIntersecting) {
             setFinanceVisible(true);
           }
+<<<<<<< HEAD
           if (entry.target === dollarSectionRef.current && entry.isIntersecting) {
             setDollarVisible(true);
           }
+=======
+>>>>>>> 03ec694 (this is the commit homepage)
         });
       },
       { 
@@ -70,7 +97,11 @@ export default function Home() {
       }
     );
 
+<<<<<<< HEAD
     // Observe all sections
+=======
+    // Observe both sections
+>>>>>>> 03ec694 (this is the commit homepage)
     if (kittySectionRef.current) {
       observer.observe(kittySectionRef.current);
     }
@@ -78,10 +109,13 @@ export default function Home() {
     if (financeSectionRef.current) {
       observer.observe(financeSectionRef.current);
     }
+<<<<<<< HEAD
     
     if (dollarSectionRef.current) {
       observer.observe(dollarSectionRef.current);
     }
+=======
+>>>>>>> 03ec694 (this is the commit homepage)
 
     return () => {
       if (kittySectionRef.current) {
@@ -90,9 +124,12 @@ export default function Home() {
       if (financeSectionRef.current) {
         observer.unobserve(financeSectionRef.current);
       }
+<<<<<<< HEAD
       if (dollarSectionRef.current) {
         observer.unobserve(dollarSectionRef.current);
       }
+=======
+>>>>>>> 03ec694 (this is the commit homepage)
     };
   }, []);
 
@@ -122,11 +159,17 @@ export default function Home() {
           <Image width="300" height="350" src="/Ozzy.png" alt="Ozzy" />
         </div>
       </div>
+<<<<<<< HEAD
       
+=======
+      <RotatingBanner  />
+
+>>>>>>> 03ec694 (this is the commit homepage)
       <div className="about-container">
         <div className="about-text">
           <h2>Keep Ozzy Happy, Save More Money</h2>
         </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
         <div className="about-cards">
         <Card text={"Track Your Financial Habits and Goals"} desc={"Stay accountable by tracking and managing your spending and weekly goals"}></Card>
@@ -136,10 +179,17 @@ export default function Home() {
         </div>
       
 =======
+=======
+>>>>>>> 74a78af (Save changes before rebase)
         <RotatingBanner />
 >>>>>>> 0a95aad (New homepage)
 
        
+=======
+       
+
+        {/* Kitty Section with improved positioning and visibility handling */}
+>>>>>>> 03ec694 (this is the commit homepage)
         <div 
           ref={kittySectionRef} 
           className={`kitty-section ${kittyVisible ? "visible" : ""}`}
@@ -169,10 +219,17 @@ export default function Home() {
           className={`finance-section ${financeVisible ? "visible" : ""}`}
         >
           <div className="finance-content">
+<<<<<<< HEAD
             <div className="finance-image">
               <Image width="300" height="350" src="/images/collab.png" alt="screenshot" />
             </div>
             <div className="finance-text">
+=======
+              <div className="finance-image">
+                <Image width="300" height="350" src="/images/collab.png" alt="screenshot" />
+              </div>
+              <div className="finance-text">
+>>>>>>> 03ec694 (this is the commit homepage)
               <div>
                 <h3 className="finance-heading">Connect & Celebrate Your Financial Journey</h3> 
               </div>
@@ -182,6 +239,7 @@ export default function Home() {
                 Whether you've stuck to your budget, paid down debt, or reached a savings milestone, our social platform lets you document your progress, receive encouragement, and motivate others. 
                 Build connections while building wealth—because financial success is always better when shared.
               </p>
+<<<<<<< HEAD
               <Link href="/signup">
                 <button className="finance-button">Get Started</button>
               </Link>
@@ -211,6 +269,12 @@ export default function Home() {
             </div>
           </div>
         </div>
+=======
+              <button className="finance-button">Get Started</button>
+            </div>
+          </div>
+        </div>
+>>>>>>> 03ec694 (this is the commit homepage)
       </div>
     </div>
   );

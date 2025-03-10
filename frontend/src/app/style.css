@@ -530,6 +530,7 @@ body{
 }
 
 
+<<<<<<< HEAD
 
 
 
@@ -548,10 +549,28 @@ body{
   overflow: hidden;
   position: relative;
   width: 100%;
+=======
+.rotating-banner {
+  width: 100%;
+  background-color: #f00d09;
+  overflow: hidden;
+  padding: 15px 0;
+  margin: 30px 0;
+  position: relative; /* Add this */
+}
+
+.rotating-banner-content {
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+>>>>>>> 03ec694 (this is the commit homepage)
 }
 
 .rotating-content {
   display: inline-block;
+<<<<<<< HEAD
   white-space: nowrap;
   /* Duplicate the content to ensure a continuous flow */
   padding-right: 50px;
@@ -679,5 +698,25 @@ body{
   
   padding-right:5px;
   border-radius: 20px;
+<<<<<<< HEAD
 }
 >>>>>>> 0a95aad (New homepage)
+=======
+=======
+  animation: scrollBanner 20s linear infinite;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  white-space: nowrap; 
+}
+
+@keyframes scrollBanner {
+  0% {
+    transform: translateX(0); 
+  }
+  100% {
+    transform: rotate(-100%); 
+  }
+>>>>>>> 03ec694 (this is the commit homepage)
+}
+>>>>>>> 74a78af (Save changes before rebase)
