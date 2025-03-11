@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
 import requests
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 from pymongo import MongoClient
 from dotenv import load_dotenv
+from flask_cors import CORS
 import os
 import bcrypt # for encrypting passwords
 from ragsystem.llm import build_rag_chain 
@@ -11,7 +11,8 @@ from langchain_core.messages import HumanMessage, SystemMessage
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Apply CORS to the app
+
 conn_string = os.environ.get("MONGODB_CONN_STRING")
 JWT_SECRET = os.environ.get("JWT_SECRET_KEY")
 try:
@@ -27,7 +28,6 @@ try:
     client = MongoClient(conn_string)
     db = client["cashcat"]
     user_auth = db["user_auth"]
-    posts = db["posts"]
     print("connected to MongoDB")
 except Exception as e:
     print(f"Connection error: {e}")
@@ -42,6 +42,7 @@ def register():
         password = data.get("password")
         if not username or not password or not email:
             return jsonify({"error": "missing fields"}), 400
+
         if user_auth.find_one({"username": username}):
             return jsonify({"error": "username already taken!"}), 409
         if user_auth.find_one({"email": email}):
@@ -71,32 +72,7 @@ def login():
         access_token = create_access_token(identity=username)
         return jsonify({"message": "login successful", "jwt_token": access_token}), 200
     except Exception as e:
-        return jsonify({"error": f"Internal server error: {str(e)}"}), 500
-
-@app.route('/get_useraccount_id', methods=['GET'])
-@jwt_required()
-def getuseraccountid():
-    try:
-        username = get_jwt_identity()
-        account_id = user_auth.find_one({"username": username}, {"account_id": 1, "_id": 0})
-        if not account_id:
-            return jsonify({"error": "no account id found"}), 404
-        return jsonify({"account_id": account_id}), 200
-    except Exception as e:
-        return jsonify({"error": "Token invalid or expired"}), 401
-
-
-@app.route('/get_username', methods=['GET'])
-@jwt_required()
-def get_username():
-    try:
-        username = get_jwt_identity()
-        if not username:
-            return jsonify({"error": "username doesn't exist"}), 404
-        return jsonify({"username": username}), 200
-    except Exception as e:
-        return jsonify({"error": "Token invalid or expired"}), 401
-
+        return jsonify({"error": "Internal server error"}), 500
 
 @app.route('/profile', methods=['GET'])
 @jwt_required()
@@ -210,29 +186,5 @@ def getuserpurchases():
     except Exception as e:
         return jsonify({"message": "internal server error"}), 500
 
-@app.route('/add_post', methods=['POST'])
-def addpost():
-    try:
-        data = request.json
-        username = data.get("username")
-        content = data.get("content")
-        category = data.get("category")
-        content_data = {"username": username, "content": content, "category": category}
-        posts.insert_one(content_data)
-        return jsonify({"message": "post successful"}), 200
-    except Exception as e:
-        return jsonify({"message": "internal server error"}), 500
-
-@app.route('/get_posts', methods=['GET'])
-def getposts():
-    try:
-        all_posts = list(posts.find({}))
-        for post in all_posts:
-            post["_id"] = str(post["_id"])
-        print(all_posts)
-        return jsonify(all_posts), 200 
-    except Exception as e:
-        return jsonify({"message": "internal server error"}), 500
-
 if __name__ == "__main__":
-    app.run(debug=True)
+ app.run(debug=True)
