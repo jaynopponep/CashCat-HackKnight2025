@@ -48,11 +48,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // Create a single observer for all sections
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // Check which section is being observed
           if (entry.target === kittySectionRef.current && entry.isIntersecting) {
             setKittyVisible(true);
           }
@@ -65,12 +63,11 @@ export default function Home() {
         });
       },
       { 
-        threshold: 0.1,  // Trigger when at least 10% is visible
-        rootMargin: "0px 0px -50px 0px" // Adjust rootMargin for earlier triggering
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
       }
     );
 
-    // Observe all sections
     if (kittySectionRef.current) {
       observer.observe(kittySectionRef.current);
     }
@@ -122,13 +119,6 @@ export default function Home() {
           <Image width="300" height="350" src="/Ozzy.png" alt="Ozzy" />
         </div>
       </div>
-      
-      
-       
-
-       
-
-        {/* Kitty Section with improved positioning and visibility handling */}
 
         <div 
           ref={kittySectionRef} 
@@ -153,7 +143,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Finance Section with improved positioning and visibility handling */}
         <div 
           ref={financeSectionRef} 
           className={`finance-section ${financeVisible ? "visible" : ""}`}
@@ -186,8 +175,8 @@ export default function Home() {
             </div>
           </div>
         </div>
+        </div>
 
-        {/* Dollar Section - Updated to match Kitty Section structure */}
         <div 
           ref={dollarSectionRef} 
           className={`dollar-section ${dollarVisible ? "visible" : ""}`}
@@ -209,12 +198,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-          
-            </div>
-        
-       
-
-   
+        </div>
   );
 }
