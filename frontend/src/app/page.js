@@ -210,9 +210,9 @@ export default function Home() {
           </div>
         </div>
 
-              <button className="finance-button">Get Started</button>
+          
             </div>
-          </div>
+        
        
 
    
