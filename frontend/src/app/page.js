@@ -124,18 +124,6 @@ export default function Home() {
       </div>
       
       
-      <div className="about-container">
-        <div className="about-text">
-          <h2>Keep Ozzy Happy, Save More Money</h2>
-        </div>
-
-        <div className="about-cards">
-        <Card text={"Track Your Financial Habits and Goals"} desc={"Stay accountable by tracking and managing your spending and weekly goals"}></Card>
-        <Card text={"Keep Ozzy Happy"} desc={"Stick your budget goals to ensure Ozzy's happiness. Get out of line, and he will be sad"}></Card>
-        <Card text={"Share Your Success With Friends"} desc={"Be the first to let your friends and family find out how successful you were in budgeting"}></Card>
-        </div>
-        </div>)
-
        
 
        
